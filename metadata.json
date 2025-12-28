@@ -1,0 +1,7 @@
+{
+  "name": "OSCE Master",
+  "description": "Next-generation AI-powered OSCE preparation platform for medical professionals featuring realistic patient simulations and clinical reasoning tools.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
