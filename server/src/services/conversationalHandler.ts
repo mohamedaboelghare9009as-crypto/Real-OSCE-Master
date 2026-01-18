@@ -6,13 +6,15 @@ export type ConversationalHandlerResult = {
 };
 
 /**
- * TODO: Replace with your real conversation handling logic.
- * This stub exists to unblock TypeScript compilation on Render.
+ * patientService.ts is calling conversationalHandler.generateResponse(...)
+ * so we export an object with a generateResponse() method.
  */
-export async function conversationalHandler(_input: {
-  text: string;
-  userId?: string;
-  sessionId?: string;
-}): Promise<ConversationalHandlerResult> {
-  return { reply: "OK" };
-}
+export const conversationalHandler = {
+  async generateResponse(_input: {
+    text: string;
+    userId?: string;
+    sessionId?: string;
+  }): Promise<ConversationalHandlerResult> {
+    return { reply: "OK" };
+  }
+};
