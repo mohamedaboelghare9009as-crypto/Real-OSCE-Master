@@ -3,11 +3,7 @@
 export enum IntentCategory {
   CONVERSATIONAL = "CONVERSATIONAL",
   UNCLEAR = "UNCLEAR",
-  HISTORY = "HISTORY",
-  EXAM = "EXAM",
-  MANAGEMENT = "MANAGEMENT",
-  SUMMARY = "SUMMARY",
-  OTHER = "OTHER"
+  CLINICAL = "CLINICAL"
 }
 
 export type IntentRouteResult = {
@@ -17,10 +13,7 @@ export type IntentRouteResult = {
 };
 
 export const intentRouter = {
-  /**
-   * Accept ANY input + extra args (patientService seems to call it in multiple ways).
-   */
-  async route(_input: any, _maybeUserId?: any, _maybeSessionId?: any): Promise<IntentRouteResult> {
-    return { category: IntentCategory.CONVERSATIONAL, confidence: 0.1 };
+  async route(_message: string): Promise<IntentRouteResult> {
+    return { category: IntentCategory.CLINICAL, confidence: 0.5 };
   }
 };
