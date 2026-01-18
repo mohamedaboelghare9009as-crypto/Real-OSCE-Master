@@ -1,360 +1,278 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { MOCK_CASES } from '../constants';
-import { VitalsData, Message } from '../types';
-import { initializeSession, sendMessageToPatient } from '../services/geminiService';
-import { 
-  Mic, MicOff, Send, X, Activity, Heart, Thermometer, 
-  Wind, Droplets, Clock, Clipboard, Stethoscope, FileText, Loader2
-} from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
+import { useVoiceTransport } from '../hooks/useVoiceTransport';
+import { simulation } from '../services/simulationService';
+import { Case } from '../types';
 
-// Web Speech API Types extension
-interface IWindow extends Window {
-  webkitSpeechRecognition: any;
-  SpeechRecognition: any;
-}
+// V3 Layout Components
+import SessionLayout from '../components/session/v3/SessionLayout';
+import TopBar from '../components/session/v3/TopBar';
+import LeftPanel from '../components/session/v3/LeftPanel';
+import CenterPanel from '../components/session/v3/CenterPanel';
+import RightPanel from '../components/session/v3/RightPanel';
+import Footer from '../components/session/v3/Footer';
+import PostSessionView from '../components/session/v3/PostSessionView';
+import { TrackerItem } from '../components/session/v3/InvestigationsTracker';
 
-const Session: React.FC = () => {
-  const { caseId } = useParams();
+type Stage = 'History' | 'Examination' | 'Investigations' | 'Management';
+
+const STAGES: Stage[] = ['History', 'Examination', 'Investigations', 'Management'];
+
+export default function Session() {
+  const { caseId } = useParams<{ caseId: string }>();
   const navigate = useNavigate();
-  const [currentCase] = useState(() => MOCK_CASES.find(c => c.id === caseId) || MOCK_CASES[0]);
-  
-  // State
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [inputText, setInputText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [vitals, setVitals] = useState<VitalsData>({
-    hr: currentCase.vitals.hr,
-    sbp: parseInt(currentCase.vitals.bp.split('/')[0]),
-    dbp: parseInt(currentCase.vitals.bp.split('/')[1]),
-    rr: currentCase.vitals.rr,
-    spo2: currentCase.vitals.spo2,
-    temp: currentCase.vitals.temp
-  });
-  const [timeRemaining, setTimeRemaining] = useState(900); // 15 mins
-  const [activeTab, setActiveTab] = useState<'history' | 'physical' | 'tests'>('history');
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const recognitionRef = useRef<any>(null);
-  const synthRef = useRef<SpeechSynthesis>(window.speechSynthesis);
+  // --- State ---
+  const [loading, setLoading] = useState(true);
+  const [currentCase, setCurrentCase] = useState<Case | null>(null);
+  const [stage, setStage] = useState<Stage>('History');
+  const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 mins
+  const [isPostSession, setIsPostSession] = useState(false);
 
-  // Initialize Gemini & Speech Recognition
+  // Inputs
+  const [inputMode, setInputMode] = useState<'voice' | 'chat'>('voice');
+
+  // Simulation Data
+  const [transcript, setTranscript] = useState<any[]>([]);
+  const [checklistItems, setChecklistItems] = useState<any[]>([
+    { id: '1', text: 'Introduced self', completed: false },
+    { id: '2', text: 'Asked onset of symptoms', completed: false },
+    { id: '3', text: 'Asked about risk factors', completed: false },
+    { id: '4', text: 'Screened for red flags', completed: false },
+  ]);
+  const [trackerItems, setTrackerItems] = useState<TrackerItem[]>([]);
+  const [coherence, setCoherence] = useState(65);
+
+  // UI States
+  const [isThinking, setIsThinking] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isSpeakingRef = useRef(false); // FIX: Prevent echo - tracks speaking state
+
+  // --- Voice Logic (Hook) ---
+  const handleSilence = useCallback((text: string) => {
+    // Prevent echo: Only process if not currently speaking
+    if (!isSpeakingRef.current && text.trim()) {
+      handleSendMessage(text);
+    }
+  }, []);
+
+  const {
+    isListening,
+    transcript: liveTranscript,
+    startListening,
+    stopListening,
+    resetTranscript
+  } = useSpeechRecognition(handleSilence, isSpeaking); // Pass isSpeaking to prevent echo
+
+  // New Voice Transport (Infrastructure)
+  const { playAudio: playPcmAudio } = useVoiceTransport();
+
+  // --- Init ---
   useEffect(() => {
     const init = async () => {
       try {
-        await initializeSession(currentCase.systemInstruction);
+        const c = await simulation.initializeCase(caseId || 'test-session-case');
+        if (c) setCurrentCase(c);
       } catch (err) {
-        console.error("Failed to init session", err);
-        const errorMsg: Message = {
-          id: Date.now().toString(),
-          role: 'system',
-          text: "System Error: Unable to connect to AI simulation engine. Please check configuration.",
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, errorMsg]);
+        console.error("Init failed", err);
+      } finally {
+        setLoading(false);
       }
     };
     init();
 
-    // Setup Speech Recognition
-    const { webkitSpeechRecognition, SpeechRecognition } = window as unknown as IWindow;
-    if (webkitSpeechRecognition || SpeechRecognition) {
-        const SpeechRecognitionClass = SpeechRecognition || webkitSpeechRecognition;
-        recognitionRef.current = new SpeechRecognitionClass();
-        recognitionRef.current.continuous = true;
-        recognitionRef.current.interimResults = true;
-        recognitionRef.current.lang = 'en-US';
-
-        recognitionRef.current.onresult = (event: any) => {
-            let finalTranscript = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    finalTranscript += event.results[i][0].transcript;
-                }
-            }
-            if (finalTranscript) {
-                setInputText(prev => prev + (prev ? ' ' : '') + finalTranscript);
-                // Optionally auto-send if silence detected or specific keywords, 
-                // but for now we let user review and press send for accuracy.
-            }
-        };
-
-        recognitionRef.current.onerror = (event: any) => {
-            console.error("Speech error", event.error);
-            setIsListening(false);
-        };
-        
-        recognitionRef.current.onend = () => {
-            if (isListening) {
-                // If we didn't manually stop, try to restart (continuous listening simulation)
-                // However, often better to just let it stop.
-            }
-        };
-    }
-
-  }, [currentCase]);
-
-  const toggleListening = () => {
-    if (!recognitionRef.current) {
-        alert("Browser does not support Speech Recognition.");
-        return;
-    }
-    if (isListening) {
-        recognitionRef.current.stop();
-        setIsListening(false);
-    } else {
-        recognitionRef.current.start();
-        setIsListening(true);
-    }
-  };
-
-  const speakResponse = (text: string) => {
-    if (synthRef.current) {
-        // Cancel any currently playing speech
-        synthRef.current.cancel();
-        
-        const utterance = new SpeechSynthesisUtterance(text);
-        // Try to find a good voice
-        const voices = synthRef.current.getVoices();
-        const preferredVoice = voices.find(v => v.name.includes("Google US English") || v.name.includes("Samantha"));
-        if (preferredVoice) utterance.voice = preferredVoice;
-        
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
-        synthRef.current.speak(utterance);
-    }
-  };
-
-  // Vitals Fluctuation
-  useEffect(() => {
+    // Timer
     const interval = setInterval(() => {
-      setVitals(v => ({
-        ...v,
-        hr: v.hr + (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 3),
-        rr: v.rr + (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.8 ? 1 : 0),
-        spo2: Math.min(100, Math.max(85, v.spo2 + (Math.random() > 0.8 ? (Math.random() > 0.5 ? 1 : -1) : 0))),
-      }));
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Timer
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeRemaining(t => Math.max(0, t - 1));
+      setTimeLeft(prev => Math.max(0, prev - 1));
     }, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
-  // Scroll to bottom
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    return () => clearInterval(interval);
+  }, [caseId]);
 
-  const handleSend = async () => {
-    if (!inputText.trim() || isLoading) return;
+  // --- Handlers ---
 
-    if (isListening) {
-        toggleListening(); // Stop listening on send
+  const playAudio = async (blob: Blob) => {
+    try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+
+      // FORCE STOP LISTENING
+      if (isListening) {
+        console.log("[ECHO PREVENTION] Stopping mic for playback...");
+        stopListening();
+      }
+
+      // Set speaking state (blocks new input)
+      isSpeakingRef.current = true;
+
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audioRef.current = audio;
+
+      setIsSpeaking(true);
+
+      audio.onended = () => {
+        setIsSpeaking(false);
+        // Keep the "Software Deafness" active for a buffer period after audio ends
+        setTimeout(() => {
+          resetTranscript(); // CRITICAL: Clear echo buffer
+          isSpeakingRef.current = false; // Unlock Input
+          console.log("Mic Unlocked & Transcript Cleared");
+          // Resume listening if in voice mode
+          if (inputMode === 'voice') startListening();
+        }, 500); // 500ms reduces delay, resetTranscript removes echo
+      };
+
+      await audio.play();
+    } catch (e) {
+      console.error("Audio playback failed", e);
+      setIsSpeaking(false);
+      isSpeakingRef.current = false; // Reset on error
+      // Ensure mic comes back if audio fails
+      if (inputMode === 'voice') startListening();
     }
+  };
 
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      text: inputText,
-      timestamp: new Date()
-    };
+  const handleSendMessage = async (text: string) => {
+    if (!text.trim()) return;
 
-    setMessages(prev => [...prev, userMsg]);
-    setInputText('');
-    setIsLoading(true);
+    // Add User Message
+    const userMsg = { id: `u-${Date.now()}`, role: 'user', text, timestamp: new Date() };
+    setTranscript(prev => [...prev, userMsg]);
+    resetTranscript();
+    setIsThinking(true);
 
     try {
-      const responseText = await sendMessageToPatient(userMsg.text);
-      const aiMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'model',
-        text: responseText,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, aiMsg]);
-      speakResponse(responseText); // Trigger TTS
-    } catch (err) {
-      console.error(err);
-      const errorMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'system',
-        text: "Error: Patient is unresponsive. Connection to AI service interrupted.",
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, errorMsg]);
-    } finally {
-      setIsLoading(false);
+      // Use real backend via simulation service
+      const res = await simulation.sendMessage(text, transcript);
+      setIsThinking(false);
+
+      const respMsg = { id: `p-${Date.now()}`, role: 'patient', text: res.text || (typeof res === 'string' ? res : "No response"), timestamp: new Date() };
+      setTranscript(prev => [...prev, respMsg]);
+
+      // Handle Audio if V2 (Blobs)
+      if (res.audioBlob) {
+        await playAudio(res.audioBlob);
+      }
+      // Handle PCM Infrastructure (Future/New)
+      else if (res.audioPCM) { // Hypothetical field for new transport
+        console.log("[Session] Playing PCM via Transport Infrastructure");
+        await playPcmAudio(res.audioPCM);
+      }
+      // Handle PCM Infrastructure (Future/New)
+      else if (res.audioPCM) { // Hypothetical field for new transport
+        console.log("[Session] Playing PCM via Transport Infrastructure");
+        await playPcmAudio(res.audioPCM);
+      }
+    } catch (e) {
+      console.error("Message error", e);
+      setIsThinking(false);
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleSend();
+  const handleAction = (action: string) => {
+    console.log("Action:", action);
+
+    if (action.startsWith('order_')) {
+      const testName = action.replace('order_', '').toUpperCase();
+      const newItem: TrackerItem = {
+        id: Date.now().toString(),
+        name: testName,
+        category: 'Labs',
+        status: 'ordered'
+      };
+      setTrackerItems(prev => [newItem, ...prev]);
+
+      // Simulate result arrival
+      setTimeout(() => {
+        setTrackerItems(prev => prev.map(i => i.id === newItem.id ? { ...i, status: 'result_available', result: 'Normal' } : i));
+      }, 3000);
+    }
   };
 
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  const handleNextStage = () => {
+    const idx = STAGES.indexOf(stage);
+    if (idx < STAGES.length - 1) {
+      setStage(STAGES[idx + 1]);
+    } else {
+      setIsPostSession(true);
+    }
   };
+
+  // --- Voice Handlers ---
+  const toggleMic = useCallback(() => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  }, [isListening, startListening, stopListening]);
+
+  // Restart listener if it stops but we didn't explicitly want it to (handled by hook mostly, but precise state sync needed)
+  // The 'useSpeechRecognition' hook handles 'continuous' internally. 
+  // However, we want to ensure visual state matches.
+
+
+  // --- Render ---
+
+  if (isPostSession) {
+    return <PostSessionView />;
+  }
+
+  if (loading) {
+    return <div className="h-screen w-full bg-slate-950 flex items-center justify-center text-slate-500 font-mono animate-pulse">Initializing Simulation Core...</div>;
+  }
 
   return (
-    <div className="h-screen w-full flex bg-[#F6F8FA] overflow-hidden relative font-inter">
-      
-      {/* --- LEFT SIDE: Patient & Vitals --- */}
-      <div className="w-1/3 h-full border-r border-slate-200 flex flex-col relative bg-slate-50">
-        
-        {/* Header / Timer */}
-        <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-10">
-          <button onClick={() => navigate('/')} className="p-3 bg-white/80 hover:bg-white rounded-full text-slate-700 backdrop-blur-md shadow-soft transition-all">
-            <X className="w-5 h-5" />
-          </button>
-          <div className={`px-4 py-2 rounded-full backdrop-blur-md bg-white/90 shadow-soft flex items-center gap-2 font-mono border border-white/50 ${timeRemaining < 60 ? 'text-red-500' : 'text-slate-900'}`}>
-            <Clock className="w-4 h-4 text-emerald-500" />
-            {formatTime(timeRemaining)}
-          </div>
-        </div>
-
-        {/* Patient Visuals */}
-        <div className="flex-1 relative">
-            <img src={currentCase.patientAvatar} alt="patient" className="w-full h-full object-cover" />
-            
-            {/* Vitals Overlay */}
-            <div className="absolute bottom-6 left-4 right-4 bg-white/90 backdrop-blur-xl rounded-[2rem] p-6 grid grid-cols-2 gap-4 shadow-soft">
-                <VitalDisplay label="HR" value={vitals.hr} unit="bpm" icon={Heart} color="text-red-500" />
-                <VitalDisplay label="BP" value={`${vitals.sbp}/${vitals.dbp}`} unit="mmHg" icon={Activity} color="text-emerald-500" />
-                <VitalDisplay label="RR" value={vitals.rr} unit="/min" icon={Wind} color="text-blue-500" />
-                <VitalDisplay label="SpO2" value={vitals.spo2} unit="%" icon={Droplets} color="text-cyan-500" />
-            </div>
-        </div>
-      </div>
-
-      {/* --- RIGHT SIDE: Interaction & Clinical Tools --- */}
-      <div className="w-2/3 h-full flex flex-col bg-[#F6F8FA] relative p-4">
-        
-        <div className="bg-white rounded-[2.5rem] shadow-soft flex-1 flex flex-col overflow-hidden relative border border-slate-100">
-            
-            {/* Top Tabs */}
-            <div className="h-16 border-b border-slate-100 flex items-center px-8 gap-8">
-            {[
-                { id: 'history', label: 'History', icon: Clipboard },
-                { id: 'physical', label: 'Physical Exam', icon: Stethoscope },
-                { id: 'tests', label: 'Labs & Imaging', icon: FileText },
-            ].map(tab => (
-                <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
-                    className={`
-                        h-full flex items-center gap-2 px-2 border-b-[3px] text-sm font-bold transition-all
-                        ${activeTab === tab.id ? 'border-emerald-500 text-emerald-600' : 'border-transparent text-slate-400 hover:text-slate-600'}
-                    `}
-                >
-                    <tab.icon className="w-4 h-4" />
-                    {tab.label}
-                </button>
-            ))}
-            </div>
-
-            {/* Content Area */}
-            <div className="flex-1 flex flex-col relative overflow-hidden bg-white">
-                
-                {/* Chat Messages */}
-                <div className="flex-1 overflow-y-auto p-8 space-y-6">
-                    {messages.length === 0 && (
-                        <div className="text-center mt-20">
-                            <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Clipboard className="w-8 h-8 text-slate-300" />
-                            </div>
-                            <p className="text-lg font-bold text-slate-900">Session Started</p>
-                            <p className="text-slate-400 text-sm">Start by introducing yourself to the patient.</p>
-                        </div>
-                    )}
-                    
-                    {messages.map((msg) => (
-                        <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                            <div className={`
-                                max-w-[70%] p-5 rounded-2xl text-sm leading-relaxed shadow-sm
-                                ${msg.role === 'user' 
-                                    ? 'bg-emerald-500 text-white rounded-tr-none' 
-                                    : msg.role === 'system'
-                                    ? 'bg-red-50 text-red-600 w-full text-center border-none'
-                                    : 'bg-slate-50 text-slate-800 rounded-tl-none'}
-                            `}>
-                                {msg.text}
-                            </div>
-                        </div>
-                    ))}
-                    {isLoading && (
-                        <div className="flex justify-start">
-                            <div className="bg-slate-50 px-5 py-4 rounded-2xl rounded-tl-none flex gap-1">
-                                <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
-                                <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-100"></span>
-                                <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce delay-200"></span>
-                            </div>
-                        </div>
-                    )}
-                    <div ref={messagesEndRef} />
-                </div>
-
-                {/* Controls */}
-                <div className="p-6 bg-white border-t border-slate-50">
-                    <div className="relative flex items-center gap-3">
-                        <button 
-                            onClick={toggleListening}
-                            className={`p-4 rounded-full transition-all duration-300 ${
-                                isListening 
-                                ? 'bg-red-500 text-white animate-pulse shadow-lg shadow-red-200' 
-                                : 'bg-slate-50 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50'
-                            }`}
-                        >
-                            {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
-                        </button>
-                        <div className="flex-1 relative">
-                            <input
-                                type="text"
-                                value={inputText}
-                                onChange={(e) => setInputText(e.target.value)}
-                                onKeyDown={handleKeyPress}
-                                placeholder={isListening ? "Listening..." : activeTab === 'history' ? "Ask the patient a question..." : "Describe physical exam action..."}
-                                className="w-full bg-slate-50 border-none rounded-full pl-6 pr-14 py-4 text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-100 transition-all placeholder:text-slate-400"
-                            />
-                            <button 
-                                onClick={handleSend}
-                                disabled={!inputText.trim() || isLoading}
-                                className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-lg shadow-emerald-200"
-                            >
-                                {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-      </div>
-    </div>
+    <SessionLayout
+      topBar={
+        <TopBar
+          title={currentCase?.title || "Unknown Case"}
+          stage={stage}
+          difficulty={2}
+          timeLeft={timeLeft}
+          onExit={() => navigate('/dashboard')}
+        />
+      }
+      leftPanel={
+        <LeftPanel
+          stage={stage}
+          onAction={handleAction}
+        />
+      }
+      centerPanel={
+        <CenterPanel
+          transcript={transcript}
+          inputMode={inputMode}
+          isListing={isListening}
+          isThinking={isThinking}
+          isSpeaking={isSpeaking}
+          currentQuery={isSpeaking ? '' : liveTranscript}
+          onSendMessage={handleSendMessage}
+        />
+      }
+      rightPanel={
+        <RightPanel
+          checklistItems={checklistItems}
+          trackerItems={trackerItems}
+          coherenceScore={coherence}
+        />
+      }
+      footer={
+        <Footer
+          isListening={isListening}
+          onToggleMic={toggleMic}
+          inputMode={inputMode}
+          onToggleMode={() => setInputMode(prev => prev === 'voice' ? 'chat' : 'voice')}
+          onNextStage={handleNextStage}
+          onEndSession={() => setIsPostSession(true)}
+          canAdvance={true} // Could add logic to block if criteria not met
+        />
+      }
+    />
   );
-};
-
-// Helper for Vitals
-const VitalDisplay: React.FC<{ label: string, value: string | number, unit: string, icon: any, color: string }> = ({ label, value, unit, icon: Icon, color }) => (
-    <div className="flex items-center gap-3">
-        <div className={`p-2 rounded-full bg-slate-50`}>
-             <Icon className={`w-5 h-5 ${color}`} />
-        </div>
-        <div>
-            <p className="text-xs text-slate-400 uppercase font-bold tracking-wide">{label}</p>
-            <p className="text-slate-900 font-mono leading-none font-bold text-lg">
-                {value} <span className="text-xs text-slate-400 font-sans font-medium">{unit}</span>
-            </p>
-        </div>
-    </div>
-);
-
-export default Session;
+}

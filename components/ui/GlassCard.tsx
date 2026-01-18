@@ -13,7 +13,7 @@ const GlassCard: React.FC<GlassCardProps> = ({ children, className = "", onClick
     <div
       onClick={onClick}
       className={`
-        bg-white rounded-[1.75rem] shadow-soft border-none
+        bg-white rounded-[1.75rem] shadow-soft border border-gray-100/50
         ${hoverEffect ? 'hover:translate-y-[-2px] hover:shadow-lg cursor-pointer transition-all duration-300 ease-out' : ''}
         ${noPadding ? '' : 'p-6'}
         ${className}

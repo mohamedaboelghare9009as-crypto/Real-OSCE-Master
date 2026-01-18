@@ -33,10 +33,64 @@ export interface VitalsData {
   temp: number;
 }
 
-export interface SessionState {
-  isRecording: boolean;
-  phase: 'history' | 'physical' | 'tests' | 'management';
-  timeRemaining: number; // seconds
+export enum StageId {
+  HISTORY = 'history',
+  PHYSICAL = 'physical',
+  INITIAL_INV = 'initial_inv',
+  CONFIRMATORY_INV = 'confirmatory_inv',
+}
+
+export enum StageStatus {
+  PENDING = 'pending',
+  ACTIVE = 'active',
+  COMPLETED = 'completed',
+}
+
+export enum PatientEmotion {
+  NEUTRAL = 'neutral',
+  PAIN = 'pain',
+  ANXIOUS = 'anxious',
+  SPEAKING = 'speaking',
+  LISTENING = 'listening',
+}
+
+export interface HistoryPoint {
+  id: string;
+  category: 'symptom' | 'chronology' | 'associated' | 'risk_factor' | 'question';
+  text: string;
+  timestamp: number;
+}
+
+export interface ExamFinding {
+  id: string;
+  system: string;
+  finding: string;
+  isPositive: boolean;
+}
+
+export interface LabResult {
+  id: string;
+  testName: string;
+  value: string;
+  unit?: string;
+  range?: string;
+  flag?: 'high' | 'low' | 'critical' | 'normal';
+}
+
+export interface LabPanel {
+  id: string;
+  title: string;
+  results: LabResult[];
+}
+
+export interface SimulationState {
+  activeStage: StageId;
+  patientEmotion: PatientEmotion;
+  isMicActive: boolean;
+  historyPoints: HistoryPoint[];
+  examFindings: ExamFinding[];
+  labResults: LabResult[];
+  completedStages: StageId[];
 }
 
 export interface CompetencyScore {

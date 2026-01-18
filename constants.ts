@@ -1,6 +1,7 @@
-import { Case } from './types';
+import { Case, StageId } from './types';
 
 export const MOCK_CASES: Case[] = [
+  // ... existing cases ...
   {
     id: 'c1',
     title: 'Acute Chest Pain',
@@ -64,4 +65,62 @@ export const NAV_LINKS = [
   { label: 'Dashboard', path: '/dashboard' },
   { label: 'Cases', path: '/cases' },
   { label: 'Analytics', path: '/analytics' },
+  { label: 'Calendar', path: '/calendar' },
+  { label: 'Upgrade to Pro', path: '/subscribe' },
+];
+
+export const STAGE_ORDER = [
+  StageId.HISTORY,
+  StageId.PHYSICAL,
+  StageId.INITIAL_INV,
+  StageId.CONFIRMATORY_INV,
+];
+
+export const STAGE_LABELS: Record<StageId, string> = {
+  [StageId.HISTORY]: "History Taking",
+  [StageId.PHYSICAL]: "Physical Examination",
+  [StageId.INITIAL_INV]: "Initial Investigations",
+  [StageId.CONFIRMATORY_INV]: "Confirmatory Investigations",
+};
+
+export const EXAM_SYSTEMS = [
+  "General Appearance",
+  "Cardiovascular",
+  "Respiratory",
+  "Abdominal",
+  "Neurological",
+  "Musculoskeletal",
+];
+
+// Mock Data for Simulation
+export const MOCK_HISTORY_POINTS = [
+  { id: '1', category: 'chronology', text: 'Chest pain started 2 hours ago while gardening.', timestamp: Date.now() },
+  { id: '2', category: 'symptom', text: 'Pain is central, crushing, rated 8/10.', timestamp: Date.now() },
+  { id: '3', category: 'associated', text: 'Associated nausea and diaphoresis.', timestamp: Date.now() },
+  { id: '4', category: 'risk_factor', text: 'Patient has history of hypertension and hyperlipidemia.', timestamp: Date.now() },
+  { id: '5', category: 'chronology', text: 'Pain radiates to the left jaw.', timestamp: Date.now() },
+];
+
+export const MOCK_EXAM_FINDINGS = {
+  "Cardiovascular": [
+    { id: 'c1', system: 'Cardiovascular', finding: 'Heart rate 110 bpm, regular', isPositive: true },
+    { id: 'c2', system: 'Cardiovascular', finding: 'S4 gallop present', isPositive: true },
+    { id: 'c3', system: 'Cardiovascular', finding: 'No murmurs or rubs', isPositive: false },
+  ],
+  "Respiratory": [
+    { id: 'r1', system: 'Respiratory', finding: 'Respiratory rate 22/min', isPositive: true },
+    { id: 'r2', system: 'Respiratory', finding: 'Bilateral basal crackles', isPositive: true },
+    { id: 'r3', system: 'Respiratory', finding: 'No wheezing', isPositive: false },
+  ],
+  "General Appearance": [
+    { id: 'g1', system: 'General Appearance', finding: 'Patient appears anxious and diaphoretic', isPositive: true },
+    { id: 'g2', system: 'General Appearance', finding: 'Clutching chest', isPositive: true },
+  ]
+};
+
+export const MOCK_LAB_RESULTS = [
+  { id: 'l1', testName: 'Troponin I', value: '2.5', unit: 'ng/mL', range: '<0.04', flag: 'critical' },
+  { id: 'l2', testName: 'ECG', value: 'ST Elevation II, III, aVF', flag: 'critical' },
+  { id: 'l3', testName: 'Hemoglobin', value: '14.5', unit: 'g/dL', range: '13.5-17.5', flag: 'normal' },
+  { id: 'l4', testName: 'WBC', value: '11.2', unit: 'x10^3/uL', range: '4.5-11.0', flag: 'high' },
 ];
