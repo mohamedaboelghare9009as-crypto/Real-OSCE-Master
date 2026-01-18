@@ -1,20 +1,22 @@
 // server/src/services/intentClassifier.ts
 
-// patientService.ts expects IntentCode to accept strings
+// Keep IntentCode flexible
 export type IntentCode = string;
 
 export type IntentClassification = {
-  code: IntentCode;
+  // patientService.ts expects `.intent`
+  intent: IntentCode;
   confidence?: number;
   meta?: Record<string, unknown>;
 };
 
 /**
- * patientService.ts seems to call intentClassifier.classify(...) with 1 or 2 args.
- * Make it permissive.
+ * patientService.ts calls intentClassifier.classify(...) and then reads `.intent`.
+ * Allow optional 2nd arg (context/case).
  */
 export const intentClassifier = {
   async classify(_text: string, _context?: unknown): Promise<IntentClassification> {
-    return { code: "unknown", confidence: 0.0 };
+    return { intent: "unknown", confidence: 0.0 };
   }
 };
+
