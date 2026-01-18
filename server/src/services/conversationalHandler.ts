@@ -6,30 +6,16 @@ export type ConversationalHandlerResult = {
 };
 
 /**
- * patientService.ts sometimes passes a case object (e.g., OsceCaseV2),
- * sometimes a string, sometimes an object with text.
- * We'll accept ANY input and derive text safely.
+ * IMPORTANT:
+ * patientService.ts is passing an OsceCaseV2 object in some calls.
+ * So we MUST accept unknown (not string) to satisfy TS.
  */
 export const conversationalHandler = {
   async generateResponse(
-    input: unknown,
+    _input: unknown,
     _maybeUserId?: string,
     _maybeSessionId?: string
   ): Promise<ConversationalHandlerResult> {
-    // If they passed { text: "..." }
-    const asObj = input as any;
-    const text =
-      typeof input === "string"
-        ? input
-        : typeof asObj?.text === "string"
-          ? asObj.text
-          : "";
-
-    // If they passed a case object, just acknowledge (stub)
-    if (!text && input && typeof input === "object") {
-      return { reply: "OK" };
-    }
-
-    return { reply: text ? "OK" : "Please provide a message." };
+    return { reply: "OK" };
   }
 };
