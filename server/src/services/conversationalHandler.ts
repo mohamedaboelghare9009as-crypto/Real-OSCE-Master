@@ -1,20 +1,14 @@
 // server/src/services/conversationalHandler.ts
+import { OsceCaseV2 } from "../schemas/caseSchema";
 
-export type ConversationalHandlerResult = {
-  reply: string;
-  meta?: Record<string, unknown>;
-};
+export type ConversationalHandlerResult = string;
 
 export const conversationalHandler = {
   /**
-   * Accept ANY input (string, object, OsceCaseV2, etc.)
-   * and make other args optional.
+   * Matches PatientService usage:
+   * conversationalHandler.generateResponse(message, osceCase)
    */
-  async generateResponse(
-    _input: any,
-    _maybeUserId?: string,
-    _maybeSessionId?: string
-  ): Promise<ConversationalHandlerResult> {
-    return { reply: "OK" };
+  async generateResponse(_message: string, _osceCase: OsceCaseV2): Promise<ConversationalHandlerResult> {
+    return "OK";
   }
 };
