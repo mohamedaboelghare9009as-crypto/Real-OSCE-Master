@@ -1,16 +1,28 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export const connectDB = async () => {
-    try {
-        const conn = await mongoose.connect(process.env.MONGO_URI || '', {
-            family: 4 // Force IPv4 to fix ECONNREFUSED issues
-        });
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
-    } catch (error: any) {
-        console.error(`Error: ${error.message}`);
-        process.exit(1);
+  try {
+    const uri = process.env.MONGODB_URI;
+
+    if (!uri) {
+      throw new Error(
+        'MONGODB_URI is missing. Set it in Render Environment Variables.'
+      );
     }
+
+    if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
+      throw new Error(
+        'Invalid MONGODB_URI format. Must start with mongodb:// or mongodb+srv://'
+      );
+    }
+
+    const conn = await mongoose.connect(uri, {
+      family: 4, // Force IPv4 (important on Render)
+    });
+
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error: any) {
+    console.error('[MongoDB] Connection failed:', error.message);
+    process.exit(1);
+  }
 };
