@@ -22,25 +22,15 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = import.meta.env.VITE_API_URL || '';
-
-const MOCK_USER: User = {
-  id: 'dev-user-id',
-  email: 'test@osce.dev',
-  fullName: 'Test Student',
-  role: 'student',
-  plan: 'premium'
-};
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(MOCK_USER);
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem('token') || 'dev-token');
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Auth bypass: skip fetching user
-    /*
     const fetchUser = async () => {
       if (!token) {
         setLoading(false);
@@ -69,7 +59,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     fetchUser();
-    */
   }, [token]);
 
   const checkAdmin = (email: string) => {

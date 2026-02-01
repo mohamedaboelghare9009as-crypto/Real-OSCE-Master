@@ -16,6 +16,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import LandingPage from './landing/LandingPage';
 import LoginPage from './components/LoginPage';
+import AuthCallback from './components/AuthCallback';
 
 // Legacy Wrappers to handle auth logic if needed
 const App: React.FC = () => {
@@ -110,6 +111,9 @@ const App: React.FC = () => {
 
                         {/* Login Page Route */}
                         <Route path="/login" element={<LoginPage />} />
+
+                        {/* OAuth Callback Route */}
+                        <Route path="/auth/callback" element={<AuthCallback />} />
 
                         {/* Auth Redirects / Fallbacks */}
                         {/* Assuming Admin/Auth are handled by standard redirects if logic triggers, 

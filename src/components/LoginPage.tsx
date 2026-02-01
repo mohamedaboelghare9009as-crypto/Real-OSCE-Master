@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 type AuthMode = 'login' | 'register';
 
@@ -13,7 +13,7 @@ const LoginPage: React.FC = () => {
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, register, loginWithGoogle } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,58 +21,21 @@ const LoginPage: React.FC = () => {
         setIsLoading(true);
 
         try {
-            // For demo purposes, we'll use mock auth
-            // In production, this would call your backend API
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
             if (mode === 'login') {
-                // Mock login - in production, validate with backend
-                login({
-                    id: '1',
-                    email: email,
-                    name: email.split('@')[0],
-                    role: 'student'
-                });
+                await login(email, password);
             } else {
-                // Mock registration - in production, create account with backend
-                login({
-                    id: '1',
-                    email: email,
-                    name: name || email.split('@')[0],
-                    role: 'student'
-                });
+                await register(email, password, name);
             }
-
             navigate('/');
-        } catch (err) {
-            setError('Authentication failed. Please try again.');
+        } catch (err: any) {
+            setError(err.message || 'Authentication failed. Please try again.');
         } finally {
             setIsLoading(false);
         }
     };
 
-    const handleGoogleLogin = async () => {
-        setError('');
-        setIsLoading(true);
-
-        try {
-            // For demo purposes, mock Google OAuth
-            // In production, this would redirect to Google OAuth flow
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-            login({
-                id: 'google-1',
-                email: 'user@gmail.com',
-                name: 'Google User',
-                role: 'student'
-            });
-
-            navigate('/');
-        } catch (err) {
-            setError('Google login failed. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
+    const handleGoogleLogin = () => {
+        loginWithGoogle();
     };
 
     return (
@@ -199,6 +162,7 @@ const LoginPage: React.FC = () => {
                                     type="text"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
+                                    required
                                     className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-osce-orange focus:border-transparent transition-all"
                                     placeholder="Dr. John Smith"
                                 />
@@ -230,6 +194,7 @@ const LoginPage: React.FC = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                minLength={6}
                                 className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-osce-orange focus:border-transparent transition-all"
                                 placeholder="••••••••"
                             />
