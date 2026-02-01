@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "npm --prefix server start",
-    "build": "npm --prefix server install && npm --prefix server run build",
+    "build": "vite build",
+    "build:server": "npm --prefix server install && npm --prefix server run build",
     "dev": "npx concurrently --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,magenta\" \"npm run dev:frontend\" \"npm --prefix server run dev\"",
     "dev:frontend": "vite",
     "preview": "vite preview"

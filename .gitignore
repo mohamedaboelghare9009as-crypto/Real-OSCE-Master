@@ -58,3 +58,4 @@ Thumbs.db
 .eslintcache
 .stylelintcache
 .npm/
+server/osce-ai-sim.json
