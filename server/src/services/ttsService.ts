@@ -20,7 +20,11 @@ export class TTSService {
      * NOTE: Journey/Generative voices do NOT support SSML, only Standard/WaveNet
      */
     async synthesize(textOrSsml: string, voiceId: string, speed: number = 1.0, pitch: number = 0.0, isSsml: boolean = false): Promise<string> {
-        if (!this.client) throw new Error("TTS Client not initialized");
+        if (!this.client) {
+            console.warn("[TTS] Client not initialized - returning silent audio.");
+            // Return 1 second of silence (minimal valid MP3)
+            return "data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+        }
 
         // Journey voices do NOT support SSML - strip tags and use plain text
         const isJourneyVoice = voiceId.includes('Journey') || voiceId.includes('Generative');
@@ -60,7 +64,8 @@ export class TTSService {
             return `data:audio/mp3;base64,${audioBase64}`;
         } catch (error: any) {
             console.error("GCP TTS Error:", error);
-            throw new Error(`TTS Failed: ${error.message}`);
+            // Fallback to silence on error too
+            return "data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
         }
     }
 

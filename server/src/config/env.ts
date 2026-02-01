@@ -9,11 +9,14 @@ dotenv.config({ path: envPath });
 // Use GOOGLE_APPLICATION_CREDENTIALS from environment
 import fs from 'fs';
 
-const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || '/opt/render/project/src/server/osce-ai-sim.json';
+const credentialsPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
-if (!fs.existsSync(credentialsPath)) {
-    console.error("[EnvLoader] FATAL: Google Cloud JSON Key not found at:", credentialsPath);
+if (credentialsPath) {
+    if (!fs.existsSync(credentialsPath)) {
+        console.warn("[EnvLoader] Warning: GOOGLE_APPLICATION_CREDENTIALS path is invalid:", credentialsPath);
+    } else {
+        console.log("[EnvLoader] Google Cloud JSON Key found at:", credentialsPath);
+    }
 } else {
-    console.log("[EnvLoader] Google Cloud JSON Key found at:", credentialsPath);
-    process.env.GOOGLE_APPLICATION_CREDENTIALS = credentialsPath;
+    console.warn("[EnvLoader] No GOOGLE_APPLICATION_CREDENTIALS provided. Google Cloud services (TTS, etc.) will be disabled.");
 }

@@ -142,6 +142,14 @@ router.get('/google', (req, res, next) => {
     req.session.returnTo = returnTo;
     console.log(`[Auth] Client starting login from: ${returnTo}`);
 
+    // Check if Google Strategy is registered
+    const strategies = (passport as any)._strategies;
+    if (!strategies || !strategies['google']) {
+        console.warn("[Auth] Google OAuth strategy not registered. Missing credentials?");
+        const clientUrl = returnTo || process.env.FRONTEND_URL || 'http://localhost:5173';
+        return res.redirect(`${clientUrl}/#/auth?error=google_config_missing`);
+    }
+
     passport.authenticate('google', {
         scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.events'],
         accessType: 'offline',
