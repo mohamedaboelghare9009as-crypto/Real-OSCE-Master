@@ -6,14 +6,14 @@ import { simulation } from '../services/simulationService';
 import { Case } from '../types';
 
 // V3 Layout Components
-import SessionLayout from '../components/session/v3/SessionLayout';
-import TopBar from '../components/session/v3/TopBar';
-import LeftPanel from '../components/session/v3/LeftPanel';
-import CenterPanel from '../components/session/v3/CenterPanel';
-import RightPanel from '../components/session/v3/RightPanel';
-import Footer from '../components/session/v3/Footer';
-import PostSessionView from '../components/session/v3/PostSessionView';
-import { TrackerItem } from '../components/session/v3/InvestigationsTracker';
+import SessionLayout from '../components_legacy/session/v3/SessionLayout';
+import TopBar from '../components_legacy/session/v3/TopBar';
+import LeftPanel from '../components_legacy/session/v3/LeftPanel';
+import CenterPanel from '../components_legacy/session/v3/CenterPanel';
+import RightPanel from '../components_legacy/session/v3/RightPanel';
+import Footer from '../components_legacy/session/v3/Footer';
+import PostSessionView from '../components_legacy/session/v3/PostSessionView';
+import { TrackerItem } from '../components_legacy/session/v3/InvestigationsTracker';
 
 type Stage = 'History' | 'Examination' | 'Investigations' | 'Management';
 

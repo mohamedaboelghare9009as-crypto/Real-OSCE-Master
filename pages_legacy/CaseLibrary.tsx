@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { caseService } from '../services/caseService';
 import { Case } from '../types';
-import GlassCard from '../components/ui/GlassCard';
+import GlassCard from '../components_legacy/ui/GlassCard';
 import { useNavigate } from 'react-router-dom';
 import {
     Filter, Search, ArrowRight, Sparkles, Shuffle,

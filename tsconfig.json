@@ -25,5 +25,14 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": [
+    "src",
+    "pages_legacy",
+    "components_legacy",
+    "contexts",
+    "services",
+    "*.ts",
+    "*.tsx"
+  ]
 }

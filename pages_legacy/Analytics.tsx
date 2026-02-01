@@ -5,7 +5,7 @@ import {
     BarChart, Bar, Cell, PieChart, Pie, Legend
 } from 'recharts';
 import { ArrowUpRight, Activity, Clock, Target, Brain, Stethoscope, HeartPulse, CheckCircle2 } from 'lucide-react';
-import GlassCard from '../components/ui/GlassCard';
+import GlassCard from '../components_legacy/ui/GlassCard';
 
 import { sessionService } from '../services/sessionService';
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Users, Activity, DollarSign, Search, Shield, AlertCircle, CheckCircle, XCircle, FileText } from 'lucide-react';
-import CaseList from '../components/admin/CaseList';
-import CaseEditor from '../components/admin/CaseEditor';
+import CaseList from '../components_legacy/admin/CaseList';
+import CaseEditor from '../components_legacy/admin/CaseEditor';
 import { Case } from '../types';
 
 // Mock data until backend is ready

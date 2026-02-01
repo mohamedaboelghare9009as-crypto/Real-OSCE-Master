@@ -1,8 +1,8 @@
 import React from 'react';
-import HeroSection from '../components/landing/HeroSection';
-import FeaturesGrid from '../components/landing/FeaturesGrid';
-import HowItWorks from '../components/landing/HowItWorks';
-import ContentSection from '../components/landing/ContentSection';
+import HeroSection from '../components_legacy/landing/HeroSection';
+import FeaturesGrid from '../components_legacy/landing/FeaturesGrid';
+import HowItWorks from '../components_legacy/landing/HowItWorks';
+import ContentSection from '../components_legacy/landing/ContentSection';
 
 export default function Landing() {
     return (

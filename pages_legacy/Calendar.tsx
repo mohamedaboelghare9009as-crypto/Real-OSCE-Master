@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, Clock, MapPin, Users, ExternalLink, AlertCircle, RefreshCw, Plus, X, CalendarDays, List, Filter } from 'lucide-react';
 import { calendarService, CalendarEvent } from '../services/calendarService';
-import GlassCard from '../components/ui/GlassCard';
+import GlassCard from '../components_legacy/ui/GlassCard';
 
 const Calendar: React.FC = () => {
     const [events, setEvents] = useState<CalendarEvent[]>([]);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import GlassCard from '../components/ui/GlassCard';
+import GlassCard from '../components_legacy/ui/GlassCard';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     CreditCard, Shield, Activity, Zap, Download, LogOut,
