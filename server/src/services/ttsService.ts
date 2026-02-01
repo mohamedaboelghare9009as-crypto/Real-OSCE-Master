@@ -7,11 +7,17 @@ export class TTSService {
 
     constructor() {
         // Client will auto-load credentials from GOOGLE_APPLICATION_CREDENTIALS
-        try {
-            const { TextToSpeechClient } = require('@google-cloud/text-to-speech');
-            this.client = new TextToSpeechClient();
-        } catch (e) {
-            console.error("Failed to initialize Google TTS Client", e);
+        // Check if the environment variable is set before trying to initialize
+        if (process.env.GOOGLE_APPLICATION_CREDENTIALS && require('fs').existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
+            try {
+                const { TextToSpeechClient } = require('@google-cloud/text-to-speech');
+                this.client = new TextToSpeechClient();
+                console.log("[TTS] Google Cloud TTS Client initialized successfully.");
+            } catch (e: any) {
+                console.error("[TTS] Failed to initialize Google TTS Client (dependency error):", e.message);
+            }
+        } else {
+            console.warn("[TTS] GOOGLE_APPLICATION_CREDENTIALS not found or invalid. TTS will fallback to silence.");
         }
     }
 

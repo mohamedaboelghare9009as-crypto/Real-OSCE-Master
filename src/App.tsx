@@ -26,7 +26,10 @@ const App: React.FC = () => {
                 <HashRouter>
                     <Routes>
                         {/* Main Layout Routes */}
-                        <Route path="/" element={
+                        {/* Main Layout Routes */}
+                        <Route path="/" element={<LandingPage />} />
+
+                        <Route path="/dashboard" element={
                             <ProtectedRoute>
                                 <div className="min-h-screen bg-[#F6F8FA]">
                                     <Navbar />
@@ -107,7 +110,8 @@ const App: React.FC = () => {
                         } />
 
                         {/* Landing Page Route */}
-                        <Route path="/landing" element={<LandingPage />} />
+                        {/* Landing Page Route - Kept for backward compatibility if needed, or remove if redundant */}
+                        <Route path="/landing" element={<Navigate to="/" replace />} />
 
                         {/* Login Page Route */}
                         <Route path="/login" element={<LoginPage />} />

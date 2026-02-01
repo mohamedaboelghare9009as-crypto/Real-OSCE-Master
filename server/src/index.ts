@@ -198,19 +198,7 @@ let server: ReturnType<typeof app.listen>;
 
 (async () => {
   try {
-    // Extra guard: make sure Render env var is present and not malformed
-    const uri = process.env.MONGODB_URI?.trim();
-    if (!uri) {
-      throw new Error(
-        'MONGODB_URI is missing. Set it in Render Environment Variables.'
-      );
-    }
-    if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
-      throw new Error(
-        `Invalid MONGODB_URI. Must start with mongodb:// or mongodb+srv://`
-      );
-    }
-
+    // Connect to Database (Validation handled in connectDB)
     await connectDB();
 
     server = app.listen(port, () => {

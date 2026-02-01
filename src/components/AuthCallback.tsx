@@ -27,7 +27,7 @@ const AuthCallback: React.FC = () => {
                 console.log('Welcome! New user registered via Google OAuth');
             }
 
-            navigate('/');
+            navigate('/dashboard');
         } else {
             // No token received, redirect to login
             navigate('/login?error=no_token');

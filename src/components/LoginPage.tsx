@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
             } else {
                 await register(email, password, name);
             }
-            navigate('/');
+            navigate('/dashboard');
         } catch (err: any) {
             setError(err.message || 'Authentication failed. Please try again.');
         } finally {
@@ -243,7 +243,7 @@ const LoginPage: React.FC = () => {
                     {/* Back to Landing */}
                     <div className="text-center pt-4">
                         <button
-                            onClick={() => navigate('/landing')}
+                            onClick={() => navigate('/')}
                             className="text-sm text-slate-500 hover:text-osce-navy transition-colors"
                         >
                             ← Back to home

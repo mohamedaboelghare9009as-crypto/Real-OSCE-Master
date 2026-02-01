@@ -204,7 +204,10 @@ const HeroSection: React.FC = () => {
                             ...Without the<br />Anxiety.
                         </p>
                         <div className="mt-8 flex justify-end gap-4 pointer-events-auto">
-                            <button className="bg-osce-navy text-white hover:bg-osce-orange transition-colors px-8 py-4 rounded-full font-bold text-lg shadow-xl">
+                            <button
+                                onClick={() => navigate('/dashboard')}
+                                className="bg-osce-navy text-white hover:bg-osce-orange transition-colors px-8 py-4 rounded-full font-bold text-lg shadow-xl"
+                            >
                                 Start Simulation
                             </button>
                         </div>

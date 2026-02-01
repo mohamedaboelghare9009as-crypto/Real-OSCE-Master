@@ -5,6 +5,7 @@ export const connectDB = async () => {
     const uri = process.env.MONGODB_URI;
 
     if (!uri) {
+      console.error('[MongoDB] MONGODB_URI is missing.');
       throw new Error(
         'MONGODB_URI is missing. Set it in Render Environment Variables.'
       );
