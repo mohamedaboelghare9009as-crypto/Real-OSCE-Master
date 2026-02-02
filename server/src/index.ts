@@ -52,6 +52,11 @@ app.use(
         return callback(null, true);
       }
 
+      // Allow Vercel deployments (all subdomains)
+      if (origin.endsWith('.vercel.app')) {
+        return callback(null, true);
+      }
+
       const msg =
         'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
@@ -186,6 +191,11 @@ app.post('/api/evaluate', async (req, res) => {
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
+});
+
+// ✅ Root Endpoint (to prevent "Cannot GET /" and confirm server is running)
+app.get('/', (req, res) => {
+  res.send('OSCE Master Backend is Running 🚀');
 });
 
 // Health Check Endpoint
