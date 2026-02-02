@@ -52,7 +52,7 @@ export const NotificationsPage = () => {
                             }`}
                     >
                         <div className="flex-shrink-0 mt-1">
-                            {notif.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-500" />}
+                            {notif.type === 'success' && <CheckCircle2 className="w-5 h-5 text-osce-blue" />}
                             {notif.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-500" />}
                             {notif.type === 'info' && <Info className="w-5 h-5 text-blue-400" />}
                         </div>

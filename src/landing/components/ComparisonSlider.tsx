@@ -30,7 +30,7 @@ const ComparisonSlider: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                     <h2 className="text-4xl md:text-6xl font-bold text-osce-navy tracking-tight">The Shift</h2>
-                    <p className="text-xl text-slate-600 font-light">Old Way vs. Mastering</p>
+                    <p className="text-xl text-osce-navy/70 font-light">Old Way vs. Mastering</p>
                 </div>
             </div>
 
@@ -46,7 +46,7 @@ const ComparisonSlider: React.FC = () => {
                                 </div>
                                 <div>
                                     <h3 className="text-xl font-bold text-osce-navy drop-shadow-sm">{row.new.text}</h3>
-                                    <p className="text-sm text-slate-600 font-mono mt-2 leading-relaxed">{row.new.subtext}</p>
+                                    <p className="text-sm text-osce-navy/70 font-mono mt-2 leading-relaxed">{row.new.subtext}</p>
                                 </div>
                             </div>
                         ))}
@@ -57,12 +57,12 @@ const ComparisonSlider: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full pointer-events-none opacity-60 mix-blend-luminosity grayscale relative z-10">
                         {COMPARISON_DATA.map((row) => (
                             <div key={row.id} className="flex flex-col items-start text-left gap-4">
-                                <div className="w-14 h-14 shrink-0 rounded-2xl bg-slate-300 border border-slate-400 flex items-center justify-center text-slate-500">
+                                <div className="w-14 h-14 shrink-0 rounded-2xl bg-slate-300 border border-slate-400 flex items-center justify-center text-osce-navy/60">
                                     <row.old.icon size={28} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-slate-600 decoration-slate-400 decoration-2 line-through">{row.old.text}</h3>
-                                    <p className="text-sm text-slate-500 font-mono mt-2 leading-relaxed">{row.old.subtext}</p>
+                                    <h3 className="text-xl font-bold text-osce-navy/70 decoration-slate-400 decoration-2 line-through">{row.old.text}</h3>
+                                    <p className="text-sm text-osce-navy/60 font-mono mt-2 leading-relaxed">{row.old.subtext}</p>
                                 </div>
                             </div>
                         ))}

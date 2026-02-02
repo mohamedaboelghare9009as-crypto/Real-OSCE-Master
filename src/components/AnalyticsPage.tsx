@@ -223,7 +223,7 @@ export const AnalyticsPage = () => {
                     value={analytics?.passedSessions || 0}
                     trend={2}
                     icon={Check}
-                    colorClass="text-emerald-500"
+                    colorClass="text-osce-blue"
                     sparkData={[1, 2, 2, 3, 4, 4, 5]}
                 />
             </div>

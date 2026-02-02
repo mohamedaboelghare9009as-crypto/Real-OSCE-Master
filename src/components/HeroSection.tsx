@@ -1,10 +1,27 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Building2, Plus, Volume2 } from 'lucide-react';
+import { Calendar, Building2, Activity, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useToast } from './Toast';
 import { sessionService } from '../../services/sessionService';
 import { useAuth } from '../contexts/AuthContext';
+
+// Import avatar images
+// Import avatar images
+import MaleDrStanding from '../assets/avatars/male_dr_standing.jpg';
+import FemaleDrStanding from '../assets/avatars/female_dr_standing.jpg';
+import FemaleDrWaving from '../assets/avatars/female_dr_waving.jpg';
+
+// Import system images
+import CardiovascularImg from '../assets/systems/cardiovascular.png';
+import NeurologyImg from '../assets/systems/neurology.png';
+import RespiratoryImg from '../assets/systems/respiratory.png';
+import EndocrineImg from '../assets/systems/endocrine.png';
+import GIImg from '../assets/systems/gi.jpg';
+import RenalImg from '../assets/systems/renal.jpg';
+import OphthalmologyImg from '../assets/systems/ophthalmology.png';
+import ENTImg from '../assets/systems/ent.jpg';
+import MusculoskeletalImg from '../assets/systems/musculoskeletal.png';
+import ReproductiveImg from '../assets/systems/reproductive.jpg';
 
 interface ProgressRingProps {
     percentage: number;
@@ -53,6 +70,40 @@ const ProgressRing = ({ percentage, size = 180, strokeWidth = 16 }: ProgressRing
     );
 };
 
+// Medical systems data with images and colors
+const MEDICAL_SYSTEMS = [
+    { id: 'cardiovascular', name: 'Cardiovascular', image: CardiovascularImg, color: 'text-rose-500', bg: 'from-rose-500/20', cases: 24, avgScore: 85 },
+    { id: 'neurology', name: 'Neurology', image: NeurologyImg, color: 'text-violet-500', bg: 'from-violet-500/20', cases: 18, avgScore: 78 },
+    { id: 'respiratory', name: 'Respiratory', image: RespiratoryImg, color: 'text-cyan-500', bg: 'from-cyan-500/20', cases: 21, avgScore: 82 },
+    { id: 'endocrine', name: 'Endocrine', image: EndocrineImg, color: 'text-amber-500', bg: 'from-amber-500/20', cases: 15, avgScore: 80 },
+    { id: 'gi', name: 'GI & Lymphatic', image: GIImg, color: 'text-emerald-500', bg: 'from-emerald-500/20', cases: 32, avgScore: 88 },
+    { id: 'renal', name: 'Renal', image: RenalImg, color: 'text-orange-500', bg: 'from-orange-500/20', cases: 19, avgScore: 76 },
+    { id: 'ophthalmology', name: 'Ophthalmology', image: OphthalmologyImg, color: 'text-blue-500', bg: 'from-blue-500/20', cases: 12, avgScore: 84 },
+    { id: 'ent', name: 'ENT', image: ENTImg, color: 'text-pink-500', bg: 'from-pink-500/20', cases: 16, avgScore: 79 },
+    { id: 'musculoskeletal', name: 'Musculoskeletal', image: MusculoskeletalImg, color: 'text-slate-500', bg: 'from-slate-500/20', cases: 28, avgScore: 86 },
+    { id: 'reproductive', name: 'Reproductive', image: ReproductiveImg, color: 'text-red-500', bg: 'from-red-500/20', cases: 14, avgScore: 81 },
+];
+
+// Available doctor avatars
+// Available doctor avatars
+const DOCTOR_AVATARS = [
+    {
+        id: 'male_dr',
+        name: 'Dr. Michael',
+        poses: [
+            { id: 'standing', src: MaleDrStanding, label: 'Standing' }
+        ]
+    },
+    {
+        id: 'female_dr',
+        name: 'Dr. Sarah',
+        poses: [
+            { id: 'waving', src: FemaleDrWaving, label: 'Greeting' },
+            { id: 'standing', src: FemaleDrStanding, label: 'Standing' }
+        ]
+    }
+];
+
 export const HeroSection = () => {
     const navigate = useNavigate();
     const { addToast } = useToast();
@@ -60,6 +111,8 @@ export const HeroSection = () => {
     const [sessions, setSessions] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [avgScore, setAvgScore] = useState(0);
+    const [currentSystemIndex, setCurrentSystemIndex] = useState(0);
+    const [selectedAvatarIndex, setSelectedAvatarIndex] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,6 +131,14 @@ export const HeroSection = () => {
             }
         };
         fetchData();
+    }, []);
+
+    // Auto-rotate through systems
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentSystemIndex((prev) => (prev + 1) % MEDICAL_SYSTEMS.length);
+        }, 5000); // Slower rotation
+        return () => clearInterval(interval);
     }, []);
 
     const date = new Date();
@@ -101,6 +162,9 @@ export const HeroSection = () => {
         }
     };
 
+    const currentSystem = MEDICAL_SYSTEMS[currentSystemIndex];
+    const currentAvatar = DOCTOR_AVATARS[selectedAvatarIndex];
+
     return (
         <div className="px-6 py-6 space-y-8">
             {/* Header Info */}
@@ -113,59 +177,73 @@ export const HeroSection = () => {
                         <span className="flex items-center gap-1"><Building2 className="w-3 h-3" /> Royal College of Medicine</span>
                     </div>
                 </div>
-
-                <div className="flex items-center gap-3">
-                    <button
-                        onClick={() => navigate('/stations')}
-                        className="px-5 py-2.5 rounded-full bg-card border border-border hover:bg-muted/50 transition-all font-medium text-sm text-foreground shadow-sm"
-                    >
-                        Open Hub
-                    </button>
-                    <button
-                        onClick={handleNewSession}
-                        className="px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:brightness-110 transition-all shadow-lg shadow-primary/20 flex items-center gap-2"
-                    >
-                        <Plus className="w-4 h-4" /> New Session
-                    </button>
-                </div>
             </div>
 
             {/* TOP ROW: 3 Columns */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-auto lg:h-[320px]">
 
-                {/* Card 1: Video Player */}
+                {/* Card 1 (LEFT): Doctor Avatar */}
+                {/* Card 1 (LEFT): Doctor Avatar */}
                 <div
-                    onClick={() => navigate('/simulation')}
-                    className="lg:col-span-4 glass-card p-0 relative overflow-hidden flex flex-col justify-between group h-full border-none shadow-2xl bg-black cursor-pointer"
+                    onClick={() => navigate('/settings')}
+                    className="lg:col-span-4 glass-card p-0 overflow-hidden relative group h-full border-none cursor-pointer bg-gradient-to-br from-osce-light-blue/30 to-white shadow-2xl"
                 >
-                    <video
-                        className="w-full h-full object-cover opacity-100 transition-opacity scale-105 group-hover:scale-100 duration-700 absolute inset-0 z-0"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        poster="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2000&auto=format&fit=crop"
-                    >
-                        <source src="https://cdn.pixabay.com/video/2021/08/04/83896-583483984_large.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none z-10" />
-
-                    {/* Top Status Indicators */}
-                    <div className="absolute top-5 left-5 z-20 flex items-center gap-3">
-                        <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
-                            <span className="flex h-2 w-2 relative">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                            </span>
-                            <span className="text-[10px] font-bold text-white tracking-wide">LIVE FEED</span>
-                        </div>
+                    {/* Main Character Display - Full Cover */}
+                    <div className="absolute inset-0">
+                        <img
+                            src={currentAvatar.poses[0].src}
+                            alt={currentAvatar.name}
+                            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        />
                     </div>
 
-                    <div className="absolute top-5 right-5 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="p-2 rounded-full bg-white/20 backdrop-blur-md text-white">
-                            <Volume2 className="w-4 h-4" />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-osce-navy/90 via-transparent to-transparent" />
+
+                    {/* Navigation Arrows for Character Selection */}
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedAvatarIndex((prev) => prev === 0 ? DOCTOR_AVATARS.length - 1 : prev - 1);
+                        }}
+                        className="absolute left-0 inset-y-0 w-12 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-osce-navy hover:scale-110 transition-all">
+                            <ChevronLeft className="w-5 h-5" />
+                        </div>
+                    </button>
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedAvatarIndex((prev) => (prev + 1) % DOCTOR_AVATARS.length);
+                        }}
+                        className="absolute right-0 inset-y-0 w-12 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center hover:bg-white hover:text-osce-navy hover:scale-110 transition-all">
+                            <ChevronRight className="w-5 h-5" />
+                        </div>
+                    </button>
+
+                    {/* Bottom content */}
+                    <div className="absolute bottom-6 left-6 right-6 z-10">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-osce-orange/20 backdrop-blur-md text-white text-xs font-medium mb-3 border border-osce-orange/30">
+                            <Activity className="w-3 h-3" />
+                            Your Avatar
+                        </div>
+                        <div className="flex items-end justify-between">
+                            <div>
+                                <p className="text-white font-bold text-2xl tracking-tight">{user?.fullName || currentAvatar.name}</p>
+                                <p className="text-white/70 text-sm">Tap to customize</p>
+                            </div>
+                            {/* Pose Indicator (Visual Only) */}
+                            {currentAvatar.poses.length > 1 && (
+                                <div className="flex gap-1 mb-1">
+                                    {currentAvatar.poses.map((_, i) => (
+                                        <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/50" />
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -178,39 +256,84 @@ export const HeroSection = () => {
                     <ProgressRing percentage={avgScore} size={280} strokeWidth={24} />
                 </div>
 
-                {/* Card 3: Visual Image (Right) */}
+                {/* Card 3 (RIGHT): Medical Systems with Analytics */}
                 <div
                     onClick={() => navigate('/stations')}
-                    className="lg:col-span-4 glass-card p-0 overflow-hidden relative group h-full border-none cursor-pointer"
+                    className="lg:col-span-4 glass-card p-0 relative overflow-hidden flex flex-col group h-full border-none shadow-2xl cursor-pointer bg-white"
                 >
-                    <img
-                        src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2000&auto=format&fit=crop"
-                        alt="Medical Building"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                    <div className="absolute bottom-6 left-6 right-6">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-medium mb-3 border border-white/10">
-                            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                            Live Simulation
+                    {/* System image - Full Cover */}
+                    <div className="absolute inset-0">
+                        <img
+                            src={currentSystem.image}
+                            alt={currentSystem.name}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                    </div>
+
+                    {/* Navigation - Minimalist Hover controls */}
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentSystemIndex((prev) => prev === 0 ? MEDICAL_SYSTEMS.length - 1 : prev - 1);
+                        }}
+                        className="absolute left-0 inset-y-0 w-12 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur shadow-md flex items-center justify-center text-slate-500 hover:text-osce-navy hover:scale-110 transition-all">
+                            <ChevronLeft className="w-5 h-5" />
                         </div>
-                        <p className="text-white/80 text-sm line-clamp-2">
-                            Interactive 3D anatomy models available for the upcoming neurology exam.
-                        </p>
+                    </button>
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentSystemIndex((prev) => (prev + 1) % MEDICAL_SYSTEMS.length);
+                        }}
+                        className="absolute right-0 inset-y-0 w-12 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                        <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur shadow-md flex items-center justify-center text-slate-500 hover:text-osce-navy hover:scale-110 transition-all">
+                            <ChevronRight className="w-5 h-5" />
+                        </div>
+                    </button>
+
+                    {/* Progress Indicator - Slim Line */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-white/30 z-20">
+                        <div
+                            className={`h-full transition-all duration-500 rounded-r-full ${currentSystem.color.replace('text-', 'bg-')}`}
+                            style={{ width: `${((currentSystemIndex + 1) / MEDICAL_SYSTEMS.length) * 100}%` }}
+                        />
+                    </div>
+
+                    {/* Bottom Info - Clear Background for Readability */}
+                    <div className="absolute bottom-0 left-0 right-0 z-10">
+                        <div className="bg-gradient-to-t from-white/95 via-white/80 to-transparent p-5 pt-12">
+                            <div className="flex items-end justify-between">
+                                <div>
+                                    <h3 className={`text-xl font-black tracking-tight ${currentSystem.color} drop-shadow-sm`}>
+                                        {currentSystem.name}
+                                    </h3>
+                                </div>
+
+                                <div className="flex items-center gap-4">
+                                    <div className="text-right">
+                                        <div className="text-[10px] uppercase font-bold text-slate-400">Cases</div>
+                                        <div className="text-lg font-bold text-slate-700">{currentSystem.cases}</div>
+                                    </div>
+                                    <div className="w-px h-8 bg-slate-200" />
+                                    <div className="text-right">
+                                        <div className="text-[10px] uppercase font-bold text-slate-400">Score</div>
+                                        <div className={`text-lg font-bold ${currentSystem.color}`}>{currentSystem.avgScore}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* MIDDLE ROW: "Draws" Equivalent - Horizontal List */}
+            {/* MIDDLE ROW: Recent Sessions */}
             <div className="space-y-4">
                 <div className="flex items-center justify-between">
                     <h3 className="text-2xl font-bold text-foreground">Recent Sessions</h3>
-                    <button
-                        onClick={handleNewSession}
-                        className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-                    >
-                        <Plus className="w-4 h-4" /> New Session
-                    </button>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -220,14 +343,14 @@ export const HeroSection = () => {
                                 key={session.id || index}
                                 onClick={() => handleSessionClick(session)}
                                 className={`p-5 rounded-3xl border transition-all cursor-pointer flex flex-col gap-3 min-w-[140px] group ${index === 0
-                                        ? 'bg-card border-2 border-primary/20 shadow-lg shadow-primary/5 hover:-translate-y-1'
-                                        : 'bg-card/40 border-border hover:bg-card hover:border-primary/30'
+                                    ? 'bg-card border-2 border-primary/20 shadow-lg shadow-primary/5 hover:-translate-y-1'
+                                    : 'bg-card/40 border-border hover:bg-card hover:border-primary/30'
                                     }`}
                             >
                                 <span className="text-sm font-semibold text-foreground/80 group-hover:text-foreground line-clamp-2" title={session.title}>{session.title}</span>
                                 <div className="flex-grow">
                                     <div className="text-xs text-muted-foreground mb-1">{new Date(session.createdAt).toLocaleDateString()}</div>
-                                    <div className={`text-xs font-semibold px-2 py-0.5 rounded-md inline-block ${session.status === 'completed' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                                    <div className={`text-xs font-semibold px-2 py-0.5 rounded-md inline-block ${session.status === 'completed' ? 'bg-osce-light-blue text-osce-navy' : 'bg-amber-100 text-amber-700'
                                         }`}>
                                         {session.status}
                                     </div>

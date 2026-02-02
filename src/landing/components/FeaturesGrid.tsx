@@ -49,7 +49,7 @@ const FeaturesGrid: React.FC = () => {
                 <h2 className="text-3xl md:text-5xl font-bold text-osce-navy mb-4 tracking-tight">
                     Clinical <span className="text-transparent bg-clip-text bg-osce-gold">Intelligence</span>
                 </h2>
-                <p className="text-slate-600 max-w-2xl mx-auto font-medium">
+                <p className="text-osce-navy/70 max-w-2xl mx-auto font-medium">
                     Holographic interface systems designed to replicate the pressure of real-world medicine.
                 </p>
             </div>
@@ -74,7 +74,7 @@ const FeaturesGrid: React.FC = () => {
                         ))}
                     </div>
                     <h3 className="relative z-10 text-xl font-bold text-osce-navy">Voice Recognition</h3>
-                    <p className="relative z-10 text-slate-600 text-sm mt-2 text-center">Natural language processing that detects hesitation.</p>
+                    <p className="relative z-10 text-osce-navy/70 text-sm mt-2 text-center">Natural language processing that detects hesitation.</p>
                 </div>
 
                 <div
@@ -92,7 +92,7 @@ const FeaturesGrid: React.FC = () => {
                         <span className="text-osce-navy font-mono text-xs tracking-widest uppercase font-bold">Analysis Complete</span>
                     </div>
                     <h3 className="relative z-10 text-xl font-bold text-osce-navy mt-6">Instant Feedback</h3>
-                    <p className="relative z-10 text-slate-600 text-sm mt-2 text-center">Automated error detection scans for clinical red flags.</p>
+                    <p className="relative z-10 text-osce-navy/70 text-sm mt-2 text-center">Automated error detection scans for clinical red flags.</p>
                 </div>
 
                 <div
@@ -111,7 +111,7 @@ const FeaturesGrid: React.FC = () => {
                         <span className="text-osce-darkOrange font-mono text-xs uppercase tracking-widest mt-2 font-bold">Pass Rate Increase</span>
                     </div>
                     <h3 className="relative z-10 text-xl font-bold text-osce-navy mt-6">Performance Lift</h3>
-                    <p className="relative z-10 text-slate-600 text-sm mt-2 text-center">Students using active recall simulation score higher.</p>
+                    <p className="relative z-10 text-osce-navy/70 text-sm mt-2 text-center">Students using active recall simulation score higher.</p>
                 </div>
 
             </div>

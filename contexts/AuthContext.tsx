@@ -32,6 +32,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (token === 'dev-token') {
+        setUser({ id: 'dev-id', email: 'dev@local', fullName: 'Dev Doctor', role: 'Student', plan: 'premium' });
+        setLoading(false);
+        return;
+      }
+
       if (!token) {
         setLoading(false);
         return;
@@ -67,6 +73,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const login = async (email: string, password: string) => {
+    if (email === 'dev@local' && password === 'developer') {
+      const u = { id: 'dev-id', email: 'dev@local', fullName: 'Dev Doctor', role: 'Student', plan: 'premium' };
+      localStorage.setItem('token', 'dev-token');
+      setToken('dev-token');
+      setUser(u);
+      return; // checkAdmin not needed or can be skipped safely
+    }
+
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

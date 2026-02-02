@@ -180,7 +180,7 @@ export const ReportsPage = () => {
                                             <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
                                                 <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {report.date}</span>
                                                 {report.status === 'Ready' && (
-                                                    <span className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-md">
+                                                    <span className="flex items-center gap-1 text-osce-navy bg-osce-light-blue px-1.5 py-0.5 rounded-md">
                                                         <CheckCircle2 className="w-3 h-3" /> Ready
                                                     </span>
                                                 )}

@@ -79,16 +79,16 @@ const ReviewCard: React.FC<{ review: Review }> = ({ review }) => {
         >
             <div className="flex justify-between items-start">
                 <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border ${isSuccess ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-blue-100 text-blue-700 border-blue-200'}`}>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold border ${isSuccess ? 'bg-osce-light-blue text-osce-navy border-osce-blue/20' : 'bg-blue-100 text-blue-700 border-blue-200'}`}>
                         {review.name.charAt(0)}
                     </div>
                     <div>
                         <div className="font-bold text-osce-navy text-sm">{review.name}</div>
-                        <div className="text-xs text-slate-500 font-medium">{review.role}</div>
+                        <div className="text-xs text-osce-navy/60 font-medium">{review.role}</div>
                     </div>
                 </div>
 
-                <div className={`px-2 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold border ${isSuccess ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 'bg-blue-50 text-blue-600 border-blue-200'}`}>
+                <div className={`px-2 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold border ${isSuccess ? 'bg-osce-light-blue text-osce-navy border-osce-blue/20' : 'bg-blue-50 text-blue-600 border-blue-200'}`}>
                     {review.badge}
                 </div>
             </div>
@@ -132,8 +132,8 @@ const SocialProofSection: React.FC = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <div className="flex items-center justify-center gap-2 mb-4">
-                        <ShieldCheck size={16} className="text-slate-500" />
-                        <span className="text-slate-600 text-xs md:text-sm font-bold tracking-widest uppercase">
+                        <ShieldCheck size={16} className="text-osce-navy/60" />
+                        <span className="text-osce-navy/70 text-xs md:text-sm font-bold tracking-widest uppercase">
                             Trusted by Medical Students Worldwide
                         </span>
                     </div>
@@ -141,7 +141,7 @@ const SocialProofSection: React.FC = () => {
                     <h2 className="text-6xl md:text-8xl font-bold text-osce-navy tracking-tighter leading-none mb-4">
                         <Counter />
                     </h2>
-                    <p className="text-slate-600 font-medium text-lg">Active Learners & Counting</p>
+                    <p className="text-osce-navy/70 font-medium text-lg">Active Learners & Counting</p>
                 </motion.div>
             </div>
 

@@ -80,6 +80,47 @@ export const sessionService = {
         const userId = await getCurrentUserId();
         if (!userId) return [];
 
+        if (userId === 'dev-user-id') {
+            return [
+                {
+                    id: '1',
+                    caseId: 'c1',
+                    title: 'Acute Chest Pain',
+                    specialty: 'Cardiology',
+                    patientAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
+                    score: 88,
+                    status: 'completed',
+                    createdAt: new Date(Date.now() - 86400000).toISOString(),
+                    competencyScores: { history: 85, physical: 90, diagnosis: 85, management: 92, communication: 88 },
+                    durationSeconds: 840
+                },
+                {
+                    id: '2',
+                    caseId: 'c2',
+                    title: 'Pediatric Asthma',
+                    specialty: 'Pediatrics',
+                    patientAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ana',
+                    score: 92,
+                    status: 'completed',
+                    createdAt: new Date(Date.now() - 172800000).toISOString(),
+                    competencyScores: { history: 90, physical: 95, diagnosis: 90, management: 90, communication: 95 },
+                    durationSeconds: 720
+                },
+                {
+                    id: '3',
+                    caseId: 'c3',
+                    title: 'Abdominal Pain',
+                    specialty: 'Gastroenterology',
+                    patientAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob',
+                    score: 45,
+                    status: 'abandoned',
+                    createdAt: new Date(Date.now() - 259200000).toISOString(),
+                    competencyScores: { history: 40, physical: 50, diagnosis: 45, management: 40, communication: 50 },
+                    durationSeconds: 300
+                }
+            ];
+        }
+
         const response = await fetch(`${API_URL}/api/sessions/user/${userId}`, {
             headers: getAuthHeaders()
         });

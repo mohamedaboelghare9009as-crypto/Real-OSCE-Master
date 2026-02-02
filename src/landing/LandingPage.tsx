@@ -61,7 +61,7 @@ const LandingPage: React.FC = () => {
             <PricingSection />
 
             {/* Footer / Extra scroll space to demonstrate flow */}
-            <footer className="w-full py-12 bg-osce-navy border-t border-osce-navy/50 text-center text-slate-400 font-mono text-sm relative z-20">
+            <footer className="w-full py-12 bg-osce-navy border-t border-osce-navy/50 text-center text-osce-navy/50 font-mono text-sm relative z-20">
                 <div className="flex justify-center mb-6">
                     <img src="https://raw.githubusercontent.com/KhalidAbdullaziz/test/main/Assets/LogoPrimary.png" alt="OSCE Master" className="h-8 brightness-0 invert opacity-80" />
                 </div>

@@ -133,7 +133,7 @@ const NeuralAudioSection: React.FC = () => {
                         "{currentConfig.text}"
                     </h3>
                 </div>
-                <p className="text-slate-600 max-w-lg mx-auto text-lg leading-relaxed font-medium">
+                <p className="text-osce-navy/70 max-w-lg mx-auto text-lg leading-relaxed font-medium">
                     Experience AI patients that don't just read a script—they have real clinical anxiety, memory lapses, and evolving symptoms.
                 </p>
                 <div className="pointer-events-auto pt-4">

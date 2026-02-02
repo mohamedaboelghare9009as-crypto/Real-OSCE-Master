@@ -96,7 +96,7 @@ const HowItWorks: React.FC = () => {
         <section ref={sectionRef} className="relative w-full py-32 bg-osce-blue overflow-hidden text-osce-navy">
             <div className="max-w-6xl mx-auto px-6 mb-24 relative z-10 text-center">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">How It Works</h2>
-                <p className="text-slate-600 font-medium text-lg">Three steps. Unlimited reps. Total confidence.</p>
+                <p className="text-osce-navy/70 font-medium text-lg">Three steps. Unlimited reps. Total confidence.</p>
             </div>
 
             <div ref={timelineRef} className="max-w-6xl mx-auto px-6 relative z-10">
@@ -124,7 +124,7 @@ const HowItWorks: React.FC = () => {
                                         <div ref={el => { cardRefs.current[index] = el }} className="text-right opacity-0">
                                             <div className="inline-block px-2 py-1 mb-3 rounded bg-osce-orange/10 border border-osce-orange/30 text-osce-navy font-mono text-xs tracking-widest">STEP {step.id}</div>
                                             <h3 className="text-2xl font-bold mb-2 text-osce-navy">{step.title}</h3>
-                                            <p className="text-slate-600 leading-relaxed">{step.description}</p>
+                                            <p className="text-osce-navy/70 leading-relaxed">{step.description}</p>
                                         </div>
                                     )}
                                 </div>
@@ -136,14 +136,14 @@ const HowItWorks: React.FC = () => {
                                         <div ref={el => { cardRefs.current[index] = el }} className="text-left opacity-0">
                                             <div className="inline-block px-2 py-1 mb-3 rounded bg-osce-orange/10 border border-osce-orange/30 text-osce-navy font-mono text-xs tracking-widest">STEP {step.id}</div>
                                             <h3 className="text-2xl font-bold mb-2 text-osce-navy">{step.title}</h3>
-                                            <p className="text-slate-600 leading-relaxed">{step.description}</p>
+                                            <p className="text-osce-navy/70 leading-relaxed">{step.description}</p>
                                         </div>
                                     )}
                                     {isMobile && (
                                         <div className="pt-1 pb-12">
                                             <div className="inline-block px-2 py-1 mb-3 rounded bg-osce-orange/10 border border-osce-orange/30 text-osce-navy font-mono text-xs tracking-widest">STEP {step.id}</div>
                                             <h3 className="text-2xl font-bold mb-2 text-osce-navy">{step.title}</h3>
-                                            <p className="text-slate-600 leading-relaxed">{step.description}</p>
+                                            <p className="text-osce-navy/70 leading-relaxed">{step.description}</p>
                                         </div>
                                     )}
                                 </div>
