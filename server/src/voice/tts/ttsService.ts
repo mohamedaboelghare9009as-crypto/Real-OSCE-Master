@@ -23,10 +23,15 @@ export class GoogleTTSService implements TTSService {
             console.warn(`[TTS] Service account key not found (GOOGLE_APPLICATION_CREDENTIALS). Falling back to mock.`);
             this.client = null as any; // Will use fallback
         } else {
-            this.client = new TextToSpeechClient({
-                keyFilename: this.serviceAccountPath
-            });
-            console.log('[TTS] Google Cloud TTS initialized');
+            try {
+                this.client = new TextToSpeechClient({
+                    keyFilename: this.serviceAccountPath
+                });
+                console.log('[TTS] Google Cloud TTS initialized');
+            } catch (error: any) {
+                console.error(`[TTS] Failed to initialize Google TTS client: ${error.message}`);
+                this.client = null as any;
+            }
         }
     }
 

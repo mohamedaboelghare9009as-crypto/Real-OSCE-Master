@@ -7,22 +7,33 @@ export class IntentResolver {
     private model: any;
 
     constructor() {
-        const project = process.env.GOOGLE_CLOUD_PROJECT || process.env.VERTEX_PROJECT || 'osce-ai-sim';
-        const location = 'us-central1'; // Strict requirement
+        try {
+            const project = process.env.GOOGLE_CLOUD_PROJECT || process.env.VERTEX_PROJECT;
+            const location = 'us-central1';
 
-        console.log(`[IntentResolver] Initializing Vertex AI with Project: ${project}, Location: ${location}`);
-
-        const platform = new VertexAI({ project, location });
-        // detailed valid resource name to satisfy SDK + User requirement
-        const fullModelName = `projects/${project}/locations/${location}/publishers/google/models/gemini-1.5-flash`;
-
-        this.model = platform.getGenerativeModel({
-            model: fullModelName,
-            generationConfig: {
-                responseMimeType: "application/json",
-                temperature: 0.2
+            if (!project) {
+                console.warn("[IntentResolver] No GOOGLE_CLOUD_PROJECT found. Running in offline/heuristic mode.");
+                return;
             }
-        });
+
+            console.log(`[IntentResolver] Initializing Vertex AI with Project: ${project}, Location: ${location}`);
+
+            const { VertexAI } = require('@google-cloud/vertexai');
+            const platform = new VertexAI({ project, location });
+            // detailed valid resource name to satisfy SDK + User requirement
+            const fullModelName = `projects/${project}/locations/${location}/publishers/google/models/gemini-1.5-flash`;
+
+            this.model = platform.getGenerativeModel({
+                model: fullModelName,
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    temperature: 0.2
+                }
+            });
+        } catch (error: any) {
+            console.error("[IntentResolver] Failed to initialize Vertex AI:", error.message);
+            console.warn("[IntentResolver] Falling back to heuristic mode.");
+        }
     }
 
     async resolve(text: string): Promise<IntentResult> {
@@ -82,6 +93,10 @@ export class IntentResolver {
             return this.makeResult(IntentCode.ASK_LIFESTYLE, 1.0, text, 'heuristic');
 
         // 2. LLM Classification (Strict Enum)
+        if (!this.model) {
+            return this.makeResult(IntentCode.UNKNOWN, 0, text, 'fallback');
+        }
+
         try {
             const prompt = this.getPrompt(text);
             const result = await this.model.generateContent(prompt);
