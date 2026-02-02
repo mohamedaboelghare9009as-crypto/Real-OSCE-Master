@@ -78,8 +78,8 @@ const StatCard = ({ title, value, trend, trendLabel, icon: Icon, colorClass, spa
                     </div>
                     {trend && (
                         <div className={`flex items-center gap-0.5 text-xs font-bold px-2 py-1 rounded-full border shadow-sm backdrop-blur-sm ${isPositive
-                                ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
-                                : 'bg-rose-50 text-rose-600 border-rose-100'
+                            ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                            : 'bg-rose-50 text-rose-600 border-rose-100'
                             }`}>
                             {isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
                             {Math.abs(trend)}%
@@ -215,7 +215,7 @@ export const AnalyticsPage = () => {
                     value={`${analytics?.avgDuration || 0}m`}
                     trend={0}
                     icon={Clock}
-                    colorClass="text-violet-500"
+                    colorClass="text-osce-navy"
                     sparkData={[12, 14, 13, 15, 12, 14, 14]}
                 />
                 <StatCard

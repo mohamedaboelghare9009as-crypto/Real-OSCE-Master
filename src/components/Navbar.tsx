@@ -88,8 +88,8 @@ export const Navbar = () => {
                                 key={item.label}
                                 to={item.path}
                                 className={`nav-tab relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive(item.path)
-                                        ? 'text-foreground bg-secondary/50'
-                                        : 'text-muted-foreground hover:text-foreground hover:bg-secondary/30'
+                                    ? 'text-foreground bg-secondary/50'
+                                    : 'text-muted-foreground hover:text-foreground hover:bg-secondary/30'
                                     }`}
                             >
                                 {item.label}
@@ -118,8 +118,8 @@ export const Navbar = () => {
                             <button
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                                 className={`flex items-center gap-2 pl-1 pr-2 py-1 rounded-full border transition-all duration-300 ${isProfileOpen
-                                        ? 'bg-background border-primary shadow-lg shadow-primary/10 ring-2 ring-primary/20'
-                                        : 'bg-background/50 border-transparent hover:bg-background hover:border-border hover:shadow-md'
+                                    ? 'bg-background border-primary shadow-lg shadow-primary/10 ring-2 ring-primary/20'
+                                    : 'bg-background/50 border-transparent hover:bg-background hover:border-border hover:shadow-md'
                                     }`}
                             >
                                 <div className="relative">
@@ -130,7 +130,7 @@ export const Navbar = () => {
                                             className="w-full h-full rounded-full bg-white object-cover"
                                         />
                                     </div>
-                                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></div>
+                                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-osce-orange border-2 border-white rounded-full"></div>
                                 </div>
 
                                 <div className="hidden xl:block text-left mr-1">
@@ -155,7 +155,7 @@ export const Navbar = () => {
                                             <div className="overflow-hidden">
                                                 <div className="font-bold text-foreground truncate">{user?.fullName || 'User'}</div>
                                                 <div className="text-xs text-muted-foreground truncate">{user?.email}</div>
-                                                <div className="mt-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[10px] font-bold">
+                                                <div className="mt-1 inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-osce-light-blue text-osce-navy text-[10px] font-bold">
                                                     <Shield className="w-3 h-3" /> Verified
                                                 </div>
                                             </div>
@@ -206,8 +206,8 @@ export const Navbar = () => {
                                     to={item.path}
                                     onClick={closeMenu}
                                     className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive(item.path)
-                                            ? 'bg-primary/10 text-primary'
-                                            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                                        ? 'bg-primary/10 text-primary'
+                                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                         }`}
                                 >
                                     {item.label}

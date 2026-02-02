@@ -26,10 +26,10 @@ import { useToast } from './Toast';
 import { sessionService } from '../../services/sessionService';
 
 const reportTypes = [
-    { id: 'Performance', icon: TrendingUp, desc: 'Scores & Trends', color: 'bg-blue-500' },
-    { id: 'Attendance', icon: Clock, desc: 'Session Logs', color: 'bg-emerald-500' },
-    { id: 'Competency', icon: CheckCircle2, desc: 'Skill Matrix', color: 'bg-violet-500' },
-    { id: 'Transcript', icon: FileText, desc: 'Full History', color: 'bg-amber-500' },
+    { id: 'Performance', icon: TrendingUp, desc: 'Scores & Trends', color: 'bg-osce-blue' },
+    { id: 'Attendance', icon: Clock, desc: 'Session Logs', color: 'bg-osce-orange' },
+    { id: 'Competency', icon: CheckCircle2, desc: 'Skill Matrix', color: 'bg-osce-navy' },
+    { id: 'Transcript', icon: FileText, desc: 'Full History', color: 'bg-osce-darkOrange' },
 ];
 
 export const ReportsPage = () => {
@@ -93,7 +93,7 @@ export const ReportsPage = () => {
                     <button
                         onClick={handleGenerateReport}
                         disabled={isGenerating}
-                        className="px-6 py-2 rounded-xl bg-gradient-to-r from-primary to-emerald-600 text-white font-bold shadow-lg shadow-emerald-500/20 flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed group transition-all"
+                        className="px-6 py-2 rounded-xl bg-gradient-to-r from-osce-orange to-osce-darkOrange text-white font-bold shadow-lg shadow-osce-orange/20 flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed group transition-all"
                     >
                         {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileBarChart className="w-4 h-4 group-hover:scale-110 transition-transform" />}
                         {isGenerating ? 'Generating...' : 'Generate New Report'}
@@ -135,8 +135,8 @@ export const ReportsPage = () => {
                                             key={type.id}
                                             onClick={() => setSelectedType(type.id)}
                                             className={`relative p-3 rounded-xl text-left transition-all border overflow-hidden group ${selectedType === type.id
-                                                    ? 'bg-primary/5 border-primary shadow-sm'
-                                                    : 'bg-card border-border hover:border-primary/30'
+                                                ? 'bg-primary/5 border-primary shadow-sm'
+                                                : 'bg-card border-border hover:border-primary/30'
                                                 }`}
                                         >
                                             <type.icon className={`w-5 h-5 mb-2 transition-colors ${selectedType === type.id ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'}`} />
