@@ -16,10 +16,13 @@ export const initializePassport = () => {
         return;
     }
 
+    const baseUrl = process.env.RENDER_EXTERNAL_URL || 'http://localhost:3001';
+
     passport.use(new GoogleStrategy({
         clientID,
         clientSecret,
-        callbackURL: '/api/auth/google/callback'
+        callbackURL: `${baseUrl}/api/auth/google/callback`,
+        proxy: true // Important for Render/Heroku load balancers
     }, async (accessToken, refreshToken, profile: Profile, done) => {
         try {
             const email = profile.emails?.[0]?.value;

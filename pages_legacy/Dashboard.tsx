@@ -1,5 +1,5 @@
 import React from 'react';
-import GlassCard from '../components/ui/GlassCard';
+import GlassCard from '../components_legacy/ui/GlassCard';
 import { ArrowUpRight, Clock, MoreHorizontal, Calendar, CheckCircle2, ArrowRight, Plus, Trash2, Check, X, Edit2, ExternalLink, History, Stethoscope } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, PieChart, Pie, Cell } from 'recharts';

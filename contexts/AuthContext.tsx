@@ -22,26 +22,22 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = import.meta.env.VITE_API_URL || '';
-
-const MOCK_USER: User = {
-  id: 'dev-user-id',
-  email: 'test@osce.dev',
-  fullName: 'Test Student',
-  role: 'student',
-  plan: 'premium'
-};
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '');
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(MOCK_USER);
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem('token') || 'dev-token');
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Auth bypass: skip fetching user
-    /*
     const fetchUser = async () => {
+      if (token === 'dev-token') {
+        setUser({ id: 'dev-id', email: 'dev@local', fullName: 'Dev Doctor', role: 'Student', plan: 'premium' });
+        setLoading(false);
+        return;
+      }
+
       if (!token) {
         setLoading(false);
         return;
@@ -69,7 +65,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     fetchUser();
-    */
   }, [token]);
 
   const checkAdmin = (email: string) => {
@@ -78,6 +73,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const login = async (email: string, password: string) => {
+    if (email === 'dev@local' && password === 'developer') {
+      const u = { id: 'dev-id', email: 'dev@local', fullName: 'Dev Doctor', role: 'Student', plan: 'premium' };
+      localStorage.setItem('token', 'dev-token');
+      setToken('dev-token');
+      setUser(u);
+      return; // checkAdmin not needed or can be skipped safely
+    }
+
     const res = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

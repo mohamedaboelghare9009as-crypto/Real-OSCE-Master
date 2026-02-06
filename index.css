@@ -1,10 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+/* Brand Palette CSS Variables */
+:root {
+  /* Base backgrounds - Light blue tinted */
+  --background: 207 60% 98%;
+  --foreground: 210 100% 20%;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+  /* Cards - Clean white with slight blue tint */
+  --card: 0 0% 100%;
+  --card-foreground: 210 100% 20%;
 
-/* Custom Scrollbar */
+  /* Popovers */
+  --popover: 0 0% 100%;
+  --popover-foreground: 210 100% 20%;
+
+  /* Primary - Orange (F59E0B) */
+  --primary: 38 92% 50%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary - Light Blue (D2E7F9) */
+  --secondary: 207 80% 90%;
+  --secondary-foreground: 210 100% 20%;
+
+  /* Muted - Very light blue */
+  --muted: 207 50% 95%;
+  --muted-foreground: 210 30% 40%;
+
+  /* Accent - Navy (003366) */
+  --accent: 210 100% 20%;
+  --accent-foreground: 0 0% 100%;
+
+  /* Destructive */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Success - Emerald green */
+  --success: 160 84% 39%;
+  --success-foreground: 0 0% 100%;
+
+  /* Borders and inputs - Subtle blue-gray */
+  --border: 210 25% 88%;
+  --input: 210 25% 88%;
+  --ring: 38 92% 50%;
+
+  --radius: 0.75rem;
+}
+
+
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 1.5rem;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -66,6 +115,76 @@
 
 /* Global Body Styles */
 body {
-  @apply bg-white text-slate-900 transition-colors duration-300;
+  background-color: hsl(207 60% 98%);
+  color: hsl(210 100% 20%);
   font-family: 'Outfit', 'Inter', sans-serif;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+/* Brand Button Utilities */
+.btn-primary {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 20px -3px rgba(245, 158, 11, 0.4);
+}
+
+.btn-secondary {
+  background-color: #D2E7F9;
+  color: #003366;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #b8d4f0;
+}
+
+.btn-accent {
+  background-color: #003366;
+  color: white;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+}
+
+.btn-accent:hover {
+  background-color: #002244;
+}
+
+/* Glass Card - Brand version */
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(210, 231, 249, 0.6);
+  box-shadow: 0 20px 25px -5px rgba(0, 51, 102, 0.08), 0 10px 10px -5px rgba(0, 51, 102, 0.04);
+  border-radius: 1.5rem;
+}
+
+/* Brand Card Accent */
+.card-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #F59E0B, #D97706);
 }

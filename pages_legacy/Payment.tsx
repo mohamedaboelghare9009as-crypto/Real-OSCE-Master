@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { useAuth } from '../contexts/AuthContext';
-import CheckoutForm from '../components/CheckoutForm';
+import CheckoutForm from '../components_legacy/CheckoutForm';
 import { Loader, ShieldCheck, Zap, Stethoscope } from 'lucide-react';
 
 // Replace with your public key

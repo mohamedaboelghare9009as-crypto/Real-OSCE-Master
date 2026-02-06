@@ -15,18 +15,23 @@ export class GoogleTTSService implements TTSService {
     private serviceAccountPath: string;
 
     constructor() {
-        // Path to your service account key
-        this.serviceAccountPath = path.resolve(__dirname, '../../../osce-ai-sim-d5b457979ae1.json');
+        // Use GOOGLE_APPLICATION_CREDENTIALS from environment
+        this.serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS || '';
 
         // Verify the key file exists
-        if (!fs.existsSync(this.serviceAccountPath)) {
-            console.warn(`[TTS] Service account key not found at ${this.serviceAccountPath}. Falling back to mock.`);
+        if (!this.serviceAccountPath || !fs.existsSync(this.serviceAccountPath)) {
+            console.warn(`[TTS] Service account key not found (GOOGLE_APPLICATION_CREDENTIALS). Falling back to mock.`);
             this.client = null as any; // Will use fallback
         } else {
-            this.client = new TextToSpeechClient({
-                keyFilename: this.serviceAccountPath
-            });
-            console.log('[TTS] Google Cloud TTS initialized');
+            try {
+                this.client = new TextToSpeechClient({
+                    keyFilename: this.serviceAccountPath
+                });
+                console.log('[TTS] Google Cloud TTS initialized');
+            } catch (error: any) {
+                console.error(`[TTS] Failed to initialize Google TTS client: ${error.message}`);
+                this.client = null as any;
+            }
         }
     }
 
@@ -41,7 +46,8 @@ export class GoogleTTSService implements TTSService {
         // Fallback to mock if client not initialized
         if (!this.client) {
             console.log(`[TTS Mock] "${textOrSsml}" with voice ${voiceId}`);
-            return `data:audio/mp3;base64,MOCK_AUDIO_${textOrSsml.substring(0, 20).replace(/\s+/g, '_')}`;
+            // Return 1 second of silence
+            return "data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
         }
 
         try {
@@ -77,7 +83,7 @@ export class GoogleTTSService implements TTSService {
         } catch (error: any) {
             console.error('[TTS Error]', error.message);
             // Fallback to mock on error
-            return `data:audio/mp3;base64,ERROR_FALLBACK_${textOrSsml.substring(0, 20).replace(/\s+/g, '_')}`;
+            return "data:audio/mp3;base64,//NExAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
         }
     }
 }

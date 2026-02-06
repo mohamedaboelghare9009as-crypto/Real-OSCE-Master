@@ -23,7 +23,7 @@ class EventEmitter {
 }
 
 class SimulationService extends EventEmitter {
-    private baseUrl = 'http://localhost:3001/api';
+    private baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:3001') + '/api';
     private currentCaseId: string | null = null;
     private currentCaseData: any = null;
     public selectedEngine: 'v2' = 'v2'; // V2 Only
