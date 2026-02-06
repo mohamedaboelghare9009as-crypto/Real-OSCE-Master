@@ -11,6 +11,7 @@ import { ReportsPage } from './components/ReportsPage';
 import { SettingsPage } from './components/SettingsPage';
 import { NotificationsPage } from './components/NotificationsPage';
 import { SimulationPage } from './components/SimulationPage';
+import { FeedbackReportPage } from './components/feedback/FeedbackReportPage';
 import { ToastProvider } from './components/Toast';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -106,6 +107,14 @@ const App: React.FC = () => {
                         <Route path="/session/:caseId" element={
                             <ProtectedRoute>
                                 <SimulationPage />
+                            </ProtectedRoute>
+                        } />
+
+                        {/* Temporary Route for Feedback Development */}
+                        <Route path="/feedback-demo" element={
+                            <ProtectedRoute>
+                                <Navbar />
+                                <FeedbackReportPage />
                             </ProtectedRoute>
                         } />
 

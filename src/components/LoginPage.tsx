@@ -240,6 +240,17 @@ const LoginPage: React.FC = () => {
                         </p>
                     </div>
 
+
+                    {/* Dev Bypass */}
+                    <div className="text-center pt-2">
+                        <button
+                            onClick={() => login('dev@local', 'developer').then(() => navigate('/dashboard'))}
+                            className="text-xs text-slate-400 hover:text-red-500 font-mono"
+                        >
+                            [DEV LOGIN BYPASS]
+                        </button>
+                    </div>
+
                     {/* Back to Landing */}
                     <div className="text-center pt-4">
                         <button
