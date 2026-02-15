@@ -34,9 +34,29 @@ export interface VitalsData {
 }
 
 export interface SessionState {
+  currentPhase: 'history' | 'exam' | 'labs' | 'confirm';
   isRecording: boolean;
-  phase: 'history' | 'physical' | 'tests' | 'management';
-  timeRemaining: number; // seconds
+  timeRemaining: number;
+}
+
+export interface HistoryItem {
+  id: string;
+  label: string;
+  value: string;
+  isExtracted: boolean;
+}
+
+export interface LabResult {
+  label: string;
+  value: string;
+  unit?: string;
+  status?: 'normal' | 'high' | 'low';
+}
+
+export interface LabPanel {
+  id: string;
+  title: string;
+  results: LabResult[];
 }
 
 export interface CompetencyScore {
