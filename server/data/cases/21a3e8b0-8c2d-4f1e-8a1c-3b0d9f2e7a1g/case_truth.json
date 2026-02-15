@@ -1,0 +1,316 @@
+{
+  "case_metadata": {
+    "id": "21a3e8b0-8c2d-4f1e-8a1c-3b0d9f2e7a1g",
+    "title": "Severe Community-Acquired Pneumonia with Acute Hypoxemic Respiratory Failure",
+    "specialty": "Internal Medicine",
+    "difficulty": "Intermediate",
+    "tags": [
+      "Pneumonia",
+      "Respiratory",
+      "COPD",
+      "Infection",
+      "Hypoxemia",
+      "AKI"
+    ]
+  },
+  "patient_identity": {
+    "name": "Arthur Jenkins",
+    "age": 72,
+    "gender": "Male",
+    "avatarUrl": "https://picsum.photos/400/400"
+  },
+  "presenting_complaint": "I've had a terrible cough and feel very short of breath for the last three days. I also feel feverish and weak.",
+  "history_of_presenting_illness": {
+    "narrative": "Mr. Arthur Jenkins, a 72-year-old male, presents with a 3-day history of progressively worsening cough, shortness of breath, and feeling generally unwell. The cough started dry but has become productive of yellowish-green sputum. He reports feeling feverish and having chills. His shortness of breath has made it difficult to walk even short distances across the room, forcing him to sit still. He also reports a sharp, stabbing pain on the right side of his chest that worsens when he takes a deep breath.",
+    "onset": "3 days ago",
+    "duration": "3 days",
+    "progression": "Worse"
+  },
+  "past_medical_history": [
+    "Chronic Obstructive Pulmonary Disease (COPD) diagnosed 10 years ago",
+    "Hypertension diagnosed 15 years ago",
+    "Type 2 Diabetes Mellitus diagnosed 5 years ago"
+  ],
+  "surgical_history": [
+    "Appendectomy at age 20"
+  ],
+  "medications": [
+    "Ramipril 5mg orally once daily",
+    "Metformin 500mg orally twice daily",
+    "Salbutamol inhaler (2 puffs) as needed (recently using 2-3 puffs daily, usually less)",
+    "Aspirin 81mg orally once daily"
+  ],
+  "allergies": [
+    "Penicillin (causes generalized rash and hives)"
+  ],
+  "family_history": [
+    "Father: Died at age 75 from a heart attack",
+    "Mother: Died at age 80 from a stroke",
+    "Brother: Living, has hypertension and diabetes"
+  ],
+  "social_history": {
+    "smoking": "Quit 5 years ago, previously smoked 1 pack per day for 40 years",
+    "alcohol": "Consumes 3-4 standard drinks per week (1-2 beers on weekends)",
+    "occupation": "Retired mechanic (worked for 45 years)",
+    "lifestyle": "Lives with his wife in a two-story house. Usually takes short walks daily, but has been unable to for the past 3 days due to shortness of breath."
+  },
+  "review_of_systems": {
+    "general": "Significant fatigue, subjective fever, chills, and reduced appetite. No reported weight loss. Feels weak and generally unwell.",
+    "cardiovascular": "No palpitations. No leg or ankle swelling. No difficulty breathing when lying flat.",
+    "respiratory": "Productive cough with yellowish-green sputum. Marked shortness of breath. Sharp, right-sided chest pain that worsens with deep inspiration. No coughing up blood.",
+    "gastrointestinal": "No nausea, no vomiting. No diarrhea or constipation. No abdominal pain.",
+    "genitourinary": "No pain with urination, no increased frequency or urgency of urination.",
+    "musculoskeletal": "No joint pain. No muscle aches or stiffness.",
+    "neurological": "No headache. No dizziness. No numbness or weakness in any limbs. Patient denies confusion.",
+    "skin": "No new rashes or skin lesions."
+  },
+  "vital_signs": {
+    "hr": 110,
+    "bp": "100/60",
+    "rr": 28,
+    "spo2": 88,
+    "temp": 38.9
+  },
+  "physical_examination": {
+    "general_appearance": "An elderly male, appears acutely ill and moderately distressed. Sitting upright in bed, leaning forward, using accessory muscles of respiration. Speaking in short, broken sentences of 2-3 words. Appears tired.",
+    "cardiovascular": "Heart sounds are S1 and S2, distinct and regular rhythm but rapid. No additional heart sounds, murmurs, rubs, or gallops identified. Capillary refill time is 3 seconds. Peripheral pulses (radial, femoral, dorsalis pedis) are palpable, 2+ and symmetrical bilaterally.",
+    "respiratory": "Increased work of breathing with visible use of sternocleidomastoid and intercostal muscles. Trachea is midline. Chest expansion is reduced on the right side. Percussion note is dull over the right lower lung field. Auscultation reveals coarse crackles and bronchial breath sounds over the right lower lung field, with reduced air entry at the right base. Whispered pectoriloquy is present over the right lower lung field. No wheezes or stridor are heard.",
+    "abdominal": "Abdomen is soft, non-tender to palpation in all four quadrants. Not distended. Bowel sounds are present in all quadrants. No palpable organomegaly or masses.",
+    "neurological": "Patient is alert and oriented to person, place, and time. Pupils are equal, round, and reactive to light bilaterally. No focal neurological deficits appreciated.",
+    "extremities": "No clubbing, cyanosis, or peripheral edema in upper or lower extremities. Skin turgor is slightly reduced."
+  },
+  "investigations": {
+    "labs": [
+      {
+        "test": "White Blood Cell Count",
+        "result": "18.5",
+        "unit": "x 10^9/L",
+        "flag": "H"
+      },
+      {
+        "test": "Neutrophils",
+        "result": "85",
+        "unit": "%",
+        "flag": "H"
+      },
+      {
+        "test": "Hemoglobin",
+        "result": "13.0",
+        "unit": "g/dL",
+        "flag": "N"
+      },
+      {
+        "test": "Platelets",
+        "result": "350",
+        "unit": "x 10^9/L",
+        "flag": "N"
+      },
+      {
+        "test": "Sodium",
+        "result": "132",
+        "unit": "mmol/L",
+        "flag": "L"
+      },
+      {
+        "test": "Potassium",
+        "result": "4.2",
+        "unit": "mmol/L",
+        "flag": "N"
+      },
+      {
+        "test": "Chloride",
+        "result": "98",
+        "unit": "mmol/L",
+        "flag": "N"
+      },
+      {
+        "test": "Bicarbonate",
+        "result": "24",
+        "unit": "mmol/L",
+        "flag": "N"
+      },
+      {
+        "test": "Creatinine",
+        "result": "110",
+        "unit": "µmol/L",
+        "flag": "H"
+      },
+      {
+        "test": "Blood Urea Nitrogen (BUN)",
+        "result": "8.0",
+        "unit": "mmol/L",
+        "flag": "H"
+      },
+      {
+        "test": "Random Blood Glucose",
+        "result": "12.5",
+        "unit": "mmol/L",
+        "flag": "H"
+      },
+      {
+        "test": "C-Reactive Protein (CRP)",
+        "result": "150",
+        "unit": "mg/L",
+        "flag": "H"
+      },
+      {
+        "test": "Procalcitonin",
+        "result": "2.5",
+        "unit": "ng/mL",
+        "flag": "H"
+      },
+      {
+        "test": "Arterial pH (on room air)",
+        "result": "7.32",
+        "unit": "",
+        "flag": "L"
+      },
+      {
+        "test": "Arterial PaCO2 (on room air)",
+        "result": "55",
+        "unit": "mmHg",
+        "flag": "H"
+      },
+      {
+        "test": "Arterial PaO2 (on room air)",
+        "result": "58",
+        "unit": "mmHg",
+        "flag": "L"
+      },
+      {
+        "test": "Arterial Bicarbonate (on room air)",
+        "result": "29",
+        "unit": "mmol/L",
+        "flag": "H"
+      },
+      {
+        "test": "Arterial SaO2 (on room air)",
+        "result": "88",
+        "unit": "%",
+        "flag": "L"
+      },
+      {
+        "test": "Alanine Aminotransferase (ALT)",
+        "result": "25",
+        "unit": "U/L",
+        "flag": "N"
+      },
+      {
+        "test": "Aspartate Aminotransferase (AST)",
+        "result": "30",
+        "unit": "U/L",
+        "flag": "N"
+      },
+      {
+        "test": "Alkaline Phosphatase (ALP)",
+        "result": "80",
+        "unit": "U/L",
+        "flag": "N"
+      },
+      {
+        "test": "Total Bilirubin",
+        "result": "15",
+        "unit": "µmol/L",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - Appearance",
+        "result": "Yellow, Clear",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - Specific Gravity",
+        "result": "1.025",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - pH",
+        "result": "6.0",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - Protein",
+        "result": "Negative",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - Glucose",
+        "result": "Negative",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - Ketones",
+        "result": "Negative",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - Nitrites",
+        "result": "Negative",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - Leukocyte Esterase",
+        "result": "Negative",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - WBC/HPF",
+        "result": "0-2",
+        "unit": "",
+        "flag": "N"
+      },
+      {
+        "test": "Urinalysis - RBC/HPF",
+        "result": "0-1",
+        "unit": "",
+        "flag": "N"
+      }
+    ],
+    "imaging": [
+      {
+        "test": "Chest X-ray (CXR)",
+        "result": "Right lower lobe consolidation with air bronchograms. No pleural effusion. Heart size and mediastinal contours are within expected limits. Evidence of hyperinflation consistent with COPD.",
+        "unit": "",
+        "flag": "H"
+      }
+    ]
+  },
+  "red_flags": [
+    "Acute hypoxemic respiratory failure (SpO2 88% on room air, PaO2 58 mmHg)",
+    "Tachypnea (Respiratory rate 28 breaths/min)",
+    "Tachycardia (Heart rate 110 bpm)",
+    "Hypotension (Blood pressure 100/60 mmHg, lower than patient's usual)",
+    "Acute kidney injury (Creatinine 110 µmol/L, up from baseline of 80 µmol/L)",
+    "Hyperglycemia (Random blood glucose 12.5 mmol/L)",
+    "Evidence of severe infection (fever, elevated WBC, CRP, procalcitonin)"
+  ],
+  "expected_student_actions": [
+    "Ask about the onset, duration, and progression of current symptoms (cough, shortness of breath, fever, chest pain, sputum production).",
+    "Inquire about history of COPD exacerbations and typical symptoms.",
+    "Ask about medication adherence and recent changes to medications.",
+    "Specifically ask about allergies, especially to antibiotics.",
+    "Perform a comprehensive set of vital signs (HR, BP, RR, SpO2, Temp).",
+    "Conduct a focused respiratory system examination, including inspection, palpation, percussion, and auscultation.",
+    "Perform a focused cardiovascular system examination.",
+    "Request a Chest X-ray.",
+    "Order laboratory investigations including complete blood count (CBC), electrolytes, renal function tests (creatinine, BUN), random blood glucose, C-reactive protein (CRP), procalcitonin, and arterial blood gas (ABG).",
+    "Initiate supplemental oxygen therapy to achieve target SpO2.",
+    "Administer empiric broad-spectrum antibiotics appropriate for severe community-acquired pneumonia.",
+    "Administer intravenous fluids for hydration and renal support.",
+    "Assess for criteria for ICU admission (e.g., CURB-65 score).",
+    "Monitor vital signs, oxygen saturation, and urine output closely.",
+    "Review and adjust existing home medications as needed, particularly diabetes medications."
+  ],
+  "diagnostic_conclusion": "Severe Community-Acquired Pneumonia with Acute Hypoxemic Respiratory Failure, exacerbated COPD, and Acute Kidney Injury (likely pre-renal due to dehydration/sepsis). CURB-65 score 3.",
+  "management_plan": "1. Administer supplemental oxygen to achieve SaO2 target of 92-96%. 2. Initiate intravenous fluids (e.g., normal saline) for rehydration and support of kidney function. 3. Start empiric broad-spectrum antibiotics for severe CAP (e.g., IV Ceftriaxone 1g daily plus Azithromycin 500mg daily, or IV Moxifloxacin 400mg daily). 4. Close monitoring of vital signs, oxygen saturation, and urine output. 5. Administer bronchodilators (e.g., nebulized salbutamol/ipratropium) as needed for COPD exacerbation. 6. Closely monitor blood glucose levels and adjust metformin or add insulin if hyperglycemia persists. 7. Consider transfer to Intensive Care Unit (ICU) due to severity of illness (CURB-65 score 3, hypoxemia, relative hypotension).",
+  "patient_behavior_rules": "Mr. Jenkins will spontaneously volunteer information about his worsening cough, shortness of breath, and feeling unwell. He will mention his usual COPD and increased inhaler use. He will speak in short, breathless sentences and appear visibly anxious and fatigued. If directly asked about pain, he will describe his pleuritic chest pain. He will confirm his allergies and medications if asked. He will state he quit smoking 5 years ago if questioned. He can recall his usual blood pressure being 'around 130/80' and his usual 'oxygen levels' being 'in the low 90s'. He will express significant worry about his breathing difficulty and how unwell he feels, stating 'I've never felt this bad before.' He will affirm he has felt feverish and had chills. He will deny any confusion.",
+  "forbidden_information": "The patient does not know the specific bacterial cause of his infection. He does not know his current exact blood pressure, heart rate, or oxygen saturation values, only his subjective experience (e.g., 'my heart is racing', 'I'm very short of breath'). He does not know his exact lab results (e.g., WBC count, creatinine level, ABG values). He does not know his CURB-65 score. He does not know the precise radiological findings from his chest X-ray, other than 'the doctors said I have an infection in my lung'."
+}

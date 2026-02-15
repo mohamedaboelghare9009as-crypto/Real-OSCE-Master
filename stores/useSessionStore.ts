@@ -1,20 +1,27 @@
 import { create } from 'zustand';
-import { Message, HistoryItem, VitalsData, LabPanel } from '../types';
+import { Message, HistoryPoint, VitalsData, LabPanel } from '../types';
 
 interface SessionStore {
     currentPhase: 'history' | 'exam' | 'labs' | 'confirm';
     transcript: Message[];
-    historyPoints: HistoryItem[];
+    historyPoints: HistoryPoint[];
     vitals: VitalsData;
     examResults: Record<string, string>;
     labResults: LabPanel[];
     timeRemaining: number;
     isRecording: boolean;
 
+    // DDx State
+    currentDDx: string[];
+    ddxFeedback: { score: number; feedback: string; detailedCritique: string } | null;
+
     // Actions
+    submitDDx: (ddx: string[]) => void;
+    setDDxFeedback: (feedback: any) => void;
+
     setPhase: (phase: 'history' | 'exam' | 'labs' | 'confirm') => void;
     addMessage: (message: Message) => void;
-    addHistoryPoint: (point: HistoryItem) => void;
+    addHistoryPoint: (point: HistoryPoint) => void;
     updateVitals: (vitals: Partial<VitalsData>) => void;
     setExamResult: (system: string, result: string) => void;
     addLabPanel: (panel: LabPanel) => void;
@@ -37,8 +44,14 @@ export const useSessionStore = create<SessionStore>((set) => ({
     },
     examResults: {},
     labResults: [],
-    timeRemaining: 900, // 15 mins
+    timeRemaining: 900,
     isRecording: false,
+
+    currentDDx: [],
+    ddxFeedback: null,
+
+    submitDDx: (ddx) => set({ currentDDx: ddx }),
+    setDDxFeedback: (feedback) => set({ ddxFeedback: feedback }),
 
     setPhase: (phase) => set({ currentPhase: phase }),
     addMessage: (message) => set((state) => ({ transcript: [...state.transcript, message] })),
@@ -59,5 +72,7 @@ export const useSessionStore = create<SessionStore>((set) => ({
         labResults: [],
         timeRemaining: 900,
         isRecording: false,
+        currentDDx: [],
+        ddxFeedback: null,
     }),
 }));

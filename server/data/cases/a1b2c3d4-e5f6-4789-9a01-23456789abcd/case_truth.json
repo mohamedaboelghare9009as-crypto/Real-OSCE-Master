@@ -1,0 +1,202 @@
+{
+  "case_metadata": {
+    "id": "a1b2c3d4-e5f6-4789-9a01-23456789abcd",
+    "title": "Acute Right Upper Quadrant Pain",
+    "specialty": "Internal Medicine",
+    "difficulty": "Intermediate",
+    "tags": [
+      "abdominal pain",
+      "cholecystitis",
+      "RUQ pain",
+      "fever",
+      "jaundice"
+    ]
+  },
+  "patient_identity": {
+    "name": "Eleanor Vance",
+    "age": 52,
+    "gender": "Female",
+    "avatarUrl": "https://picsum.photos/400/400"
+  },
+  "presenting_complaint": "I have terrible pain right under my ribs on the right side. It's been getting worse since yesterday evening.",
+  "history_of_presenting_illness": {
+    "narrative": "Ms. Vance, a 52-year-old female, presents to the emergency department with severe right upper quadrant (RUQ) abdominal pain. The pain started abruptly yesterday evening, around 6 PM, after she ate a fatty dinner of fried chicken and mashed potatoes. She describes the pain as a constant, dull ache that has progressively worsened, now radiating to her right shoulder. She also reports associated nausea and one episode of non-bloody, non-bilious vomiting shortly after the pain began. She denies diarrhea or constipation. She has felt feverish and has had chills since this morning. She tried over-the-counter ibuprofen, which did not provide any relief. She states she has had similar, but milder and shorter-lived, episodes of RUQ pain after fatty meals in the past few months, but none as severe or prolonged as this current episode.",
+    "onset": "Yesterday evening, around 6 PM",
+    "duration": "Approximately 24 hours and getting worse",
+    "progression": "Significantly worse since onset"
+  },
+  "past_medical_history": [
+    "Hypertension diagnosed 5 years ago",
+    "Type 2 Diabetes Mellitus diagnosed 3 years ago",
+    "Hyperlipidemia diagnosed 4 years ago"
+  ],
+  "surgical_history": [
+    "Appendectomy at age 12"
+  ],
+  "medications": [
+    "Lisinopril 10mg once daily",
+    "Metformin 500mg twice daily",
+    "Atorvastatin 20mg once daily"
+  ],
+  "allergies": [
+    "Penicillin (hives and rash)"
+  ],
+  "family_history": [
+    "Mother: Type 2 Diabetes Mellitus",
+    "Father: Hypertension and coronary artery disease",
+    "Sister: No significant medical conditions"
+  ],
+  "social_history": {
+    "smoking": "Quit 10 years ago, previously smoked 1 pack per day for 20 years",
+    "alcohol": "Drinks socially, approximately 1-2 glasses of wine on weekends",
+    "occupation": "Retired school teacher",
+    "lifestyle": "Sedentary, enjoys reading, limited physical activity"
+  },
+  "review_of_systems": {
+    "general": "Feeling feverish and chills, no recent weight loss or gain, generalized fatigue",
+    "cardiovascular": "No chest pain, no palpitations, no swelling in legs",
+    "respiratory": "No cough, no shortness of breath, no wheezing",
+    "gastrointestinal": "Nausea, one episode of non-bloody, non-bilious vomiting, no change in bowel habits, no jaundice, no melena, no hematochezia. Specific to abdominal pain: severe right upper quadrant pain radiating to right shoulder, exacerbated by movement, not relieved by ibuprofen. Patient denies burning on urination. Patient denies difficulty swallowing.",
+    "musculoskeletal": "No joint pain, no muscle weakness",
+    "neurological": "No headache, no dizziness, no numbness or tingling",
+    "endocrine": "No excessive thirst, no increased urination beyond usual for diabetes, no heat or cold intolerance."
+  },
+  "vital_signs": {
+    "hr": 98,
+    "bp": "138/86",
+    "rr": 20,
+    "spo2": 97,
+    "temp": 38.5
+  },
+  "physical_examination": {
+    "general_appearance": "Appears acutely ill, lying still on the examination table, grimacing occasionally, slightly jaundiced sclerae",
+    "cardiovascular": "S1 and S2 present, regular rhythm, no murmurs, rubs, or gallops, peripheral pulses 2+ and symmetrical",
+    "respiratory": "Equal chest expansion, clear breath sounds bilaterally, no crackles, wheezes, or rhonchi",
+    "abdominal": "Abdomen is soft but distended. Marked tenderness to palpation in the right upper quadrant. Positive Murphy's sign (inspiratory arrest on palpation of RUQ). Mild guarding in the RUQ. No rebound tenderness. Bowel sounds are diminished. No organomegaly appreciated. No palpable masses.",
+    "skin": "Warm and dry. No rashes. Mild scleral icterus noted.",
+    "extremities": "No edema, no clubbing, no cyanosis. Capillary refill less than 2 seconds."
+  },
+  "investigations": {
+    "labs": [
+      {
+        "test": "WBC",
+        "result": "14.5",
+        "unit": "x10^9/L",
+        "flag": "H"
+      },
+      {
+        "test": "Hemoglobin",
+        "result": "13.2",
+        "unit": "g/dL",
+        "flag": "N"
+      },
+      {
+        "test": "Platelets",
+        "result": "280",
+        "unit": "x10^9/L",
+        "flag": "N"
+      },
+      {
+        "test": "CRP",
+        "result": "85",
+        "unit": "mg/L",
+        "flag": "H"
+      },
+      {
+        "test": "Total Bilirubin",
+        "result": "2.8",
+        "unit": "mg/dL",
+        "flag": "H"
+      },
+      {
+        "test": "Direct Bilirubin",
+        "result": "1.5",
+        "unit": "mg/dL",
+        "flag": "H"
+      },
+      {
+        "test": "AST",
+        "result": "65",
+        "unit": "U/L",
+        "flag": "H"
+      },
+      {
+        "test": "ALT",
+        "result": "80",
+        "unit": "U/L",
+        "flag": "H"
+      },
+      {
+        "test": "Alkaline Phosphatase",
+        "result": "180",
+        "unit": "U/L",
+        "flag": "H"
+      },
+      {
+        "test": "Amylase",
+        "result": "95",
+        "unit": "U/L",
+        "flag": "N"
+      },
+      {
+        "test": "Lipase",
+        "result": "70",
+        "unit": "U/L",
+        "flag": "N"
+      },
+      {
+        "test": "Glucose (Random)",
+        "result": "180",
+        "unit": "mg/dL",
+        "flag": "H"
+      },
+      {
+        "test": "Creatinine",
+        "result": "0.9",
+        "unit": "mg/dL",
+        "flag": "N"
+      },
+      {
+        "test": "Sodium",
+        "result": "138",
+        "unit": "mEq/L",
+        "flag": "N"
+      },
+      {
+        "test": "Potassium",
+        "result": "4.1",
+        "unit": "mEq/L",
+        "flag": "N"
+      }
+    ],
+    "imaging": [
+      {
+        "test": "Abdominal Ultrasound",
+        "result": "Gallbladder wall thickening (6mm), pericholecystic fluid, gallstones present, positive sonographic Murphy's sign. Common bile duct diameter 7mm, no choledocholithiasis visualized.",
+        "unit": "N/A",
+        "flag": "H"
+      }
+    ]
+  },
+  "red_flags": [
+    "Severe abdominal pain",
+    "Fever and chills",
+    "Tachycardia",
+    "Leukocytosis",
+    "Elevated inflammatory markers (CRP)",
+    "Jaundice (scleral icterus, elevated bilirubin)",
+    "Positive Murphy's sign"
+  ],
+  "expected_student_actions": [
+    "Take a focused history including pain characteristics (OLD CARTS), associated symptoms (nausea, vomiting, fever, chills, changes in bowel habits), aggravating/alleviating factors, risk factors (fatty food intake, previous episodes)",
+    "Ask about past medical history, surgical history, medications, allergies, family history, social history",
+    "Perform a general and abdominal physical examination (inspection, auscultation, palpation, percussion, specifically checking for Murphy's sign, guarding, rebound tenderness). Also assess for scleral icterus.",
+    "Order relevant investigations: Complete Blood Count, Liver Function Tests, Amylase/Lipase, C-reactive protein, Abdominal Ultrasound",
+    "Formulate a differential diagnosis including acute cholecystitis, cholangitis, pancreatitis, hepatitis, peptic ulcer disease",
+    "Discuss initial management plan including pain control, IV fluids, antibiotics, and surgical consultation"
+  ],
+  "diagnostic_conclusion": "Acute Cholecystitis",
+  "management_plan": "Admission for intravenous fluids, pain management (IV analgesia), broad-spectrum antibiotics (e.g., piperacillin-tazobactam), NPO status, surgical consultation for cholecystectomy, monitoring for signs of worsening infection or obstruction.",
+  "patient_behavior_rules": "The patient volunteers the chief complaint and the onset after a fatty meal. She will describe the pain as constant and radiating to her right shoulder. She will spontaneously mention nausea and one episode of vomiting. She will state she has felt feverish and had chills. She will mention trying ibuprofen without relief. She will not spontaneously mention past episodes unless directly asked about similar pain or her general health. When asked about the quality of pain, she will say 'It's a deep, constant ache, not sharp or stabbing.' When asked if anything makes it better, she will say 'Nothing helps. Lying still makes it slightly less bad than moving around.' When asked about anything that makes it worse, she will say 'Eating, especially fatty foods, definitely made it worse when it started. Movement also makes it worse.' She will confirm she has had milder episodes before if asked, describing them as 'shorter, less intense pains after fatty meals that went away on their own.' She will accurately list her medications and allergies when prompted. She will describe her social history accurately when prompted. She will exhibit signs of discomfort during the physical exam, particularly grimacing during abdominal palpation. She will show inspiratory arrest during Murphy's sign testing. She will not know the names of her blood vessels or internal organs beyond a general idea of her stomach and 'liver area'. She will not speculate on the diagnosis. She will ask 'What's happening to me, Doctor?' at the end of the history taking or physical examination.",
+  "forbidden_information": "The patient explicitly does NOT know the results of any blood tests, imaging scans, or specific medical terminology for her condition (e.g., 'cholecystitis', 'leukocytosis', 'hyperbilirubinemia'). She does not know the exact cause of her past, milder abdominal pains. She does not know her exact blood glucose readings from home monitoring. She does not know the names of her blood pressure or cholesterol numbers."
+}

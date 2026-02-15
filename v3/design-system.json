@@ -1,0 +1,21 @@
+{
+    "name": "OSCE Master Clinical Vibe",
+    "version": "1.0.0",
+    "tokens": {
+        "colors": {
+            "hospital-white": "#F8FAFC",
+            "sterile-blue": "#0EA5E9",
+            "emergency-red": "#EF4444",
+            "monitor-green": "#22C55E",
+            "slate-dark": "#0F172A"
+        },
+        "typography": {
+            "main": "Inter, system-ui, sans-serif",
+            "mono": "JetBrains Mono, monospace"
+        },
+        "effects": {
+            "glassmorphism": "bg-white/10 backdrop-blur-md border border-white/20",
+            "neon-glow": "shadow-[0_0_15px_rgba(14,165,233,0.5)]"
+        }
+    }
+}

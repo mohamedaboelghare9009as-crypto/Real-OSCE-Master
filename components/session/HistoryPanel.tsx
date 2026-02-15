@@ -1,12 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Message, HistoryItem } from '../../types';
+import { Message, HistoryPoint } from '../../types';
 import { CheckCircle2, User, Activity } from 'lucide-react';
 import GlassContainer from './GlassContainer';
 
 interface HistoryPanelProps {
     transcript: Message[];
-    historyPoints: HistoryItem[];
+    historyPoints: HistoryPoint[];
     isTyping?: boolean;
 }
 

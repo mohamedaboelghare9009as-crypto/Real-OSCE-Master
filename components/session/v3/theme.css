@@ -1,0 +1,299 @@
+/**
+ * Medical Simulation Theme System
+ * Based on Nightingale Blue (#0474b8) - Florence Nightingale's legacy
+ * 
+ * Usage:
+ * - Light mode: default styles
+ * - Dark mode: add 'dark' class to html element
+ * 
+ * CSS Variables follow the format:
+ * --ms-{category}-{property}: value
+ * Where category = color, spacing, typography, shadow, etc.
+ */
+
+:root {
+  /* ============================================
+     PRIMARY PALETTE - Nightingale Blue Theme
+     ============================================ */
+  
+  /* Primary Colors */
+  --ms-color-primary-50: #e6f4fa;
+  --ms-color-primary-100: #cce9f5;
+  --ms-color-primary-200: #99d3eb;
+  --ms-color-primary-300: #66bde1;
+  --ms-color-primary-400: #33a7d7;
+  --ms-color-primary-500: #0474b8;  /* Nightingale Blue */
+  --ms-color-primary-600: #036d96;
+  --ms-color-primary-700: #025c7d;
+  --ms-color-primary-800: #014b64;
+  --ms-color-primary-900: #003a4b;
+
+  /* Semantic Colors */
+  --ms-color-success: #28a745;
+  --ms-color-success-light: #d4edda;
+  --ms-color-success-dark: #155724;
+  
+  --ms-color-warning: #ffc107;
+  --ms-color-warning-light: #fff3cd;
+  --ms-color-warning-dark: #856404;
+  
+  --ms-color-error: #dc3545;
+  --ms-color-error-light: #f8d7da;
+  --ms-color-error-dark: #721c24;
+  
+  --ms-color-info: #0556AD;
+  --ms-color-info-light: #cce5ff;
+  --ms-color-info-dark: #004085;
+
+  /* Neutral Colors - Light Mode */
+  --ms-color-bg: #f8f8f8;
+  --ms-color-bg-elevated: #ffffff;
+  --ms-color-bg-surface: #fafafa;
+  --ms-color-bg-hover: #f0f0f0;
+  
+  --ms-color-text: #333333;
+  --ms-color-text-secondary: #666666;
+  --ms-color-text-tertiary: #999999;
+  --ms-color-text-muted: #cccccc;
+  
+  --ms-color-border: #e5e7eb;
+  --ms-color-border-light: #f0f0f0;
+  --ms-color-border-dark: #d1d5db;
+
+  /* ============================================
+     SPACING SCALE
+     ============================================ */
+  --ms-space-0: 0;
+  --ms-space-1: 0.25rem;   /* 4px */
+  --ms-space-2: 0.5rem;    /* 8px */
+  --ms-space-3: 0.75rem;   /* 12px */
+  --ms-space-4: 1rem;      /* 16px */
+  --ms-space-5: 1.25rem;   /* 20px */
+  --ms-space-6: 1.5rem;    /* 24px */
+  --ms-space-8: 2rem;      /* 32px */
+  --ms-space-10: 2.5rem;   /* 40px */
+  --ms-space-12: 3rem;     /* 48px */
+  --ms-space-16: 4rem;     /* 64px */
+  --ms-space-20: 5rem;     /* 80px */
+  --ms-space-24: 6rem;     /* 96px */
+
+  /* ============================================
+     TYPOGRAPHY SCALE
+     ============================================ */
+  --ms-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ms-font-family-mono: 'SF Mono', Monaco, monospace;
+  
+  --ms-font-size-xs: 0.75rem;     /* 12px */
+  --ms-font-size-sm: 0.875rem;    /* 14px */
+  --ms-font-size-base: 1rem;      /* 16px */
+  --ms-font-size-lg: 1.125rem;    /* 18px */
+  --ms-font-size-xl: 1.25rem;     /* 20px */
+  --ms-font-size-2xl: 1.5rem;     /* 24px */
+  --ms-font-size-3xl: 1.875rem;   /* 30px */
+  --ms-font-size-4xl: 2.25rem;    /* 36px */
+  
+  --ms-font-weight-normal: 400;
+  --ms-font-weight-medium: 500;
+  --ms-font-weight-semibold: 600;
+  --ms-font-weight-bold: 700;
+  
+  --ms-line-height-tight: 1.25;
+  --ms-line-height-normal: 1.5;
+  --ms-line-height-relaxed: 1.75;
+  
+  --ms-letter-spacing-tight: -0.025em;
+  --ms-letter-spacing-normal: 0;
+  --ms-letter-spacing-wide: 0.025em;
+  --ms-letter-spacing-wider: 0.05em;
+
+  /* ============================================
+     SHADOWS & EFFECTS
+     ============================================ */
+  --ms-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --ms-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --ms-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --ms-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  --ms-shadow-primary: 0 4px 12px rgba(4, 116, 184, 0.3);
+  --ms-shadow-success: 0 4px 12px rgba(40, 167, 69, 0.3);
+  --ms-shadow-warning: 0 4px 12px rgba(255, 193, 7, 0.3);
+  --ms-shadow-error: 0 4px 12px rgba(220, 53, 69, 0.3);
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+  --ms-radius-none: 0;
+  --ms-radius-sm: 0.25rem;   /* 4px */
+  --ms-radius-md: 0.375rem;  /* 6px */
+  --ms-radius-lg: 0.5rem;    /* 8px */
+  --ms-radius-xl: 0.75rem;   /* 12px */
+  --ms-radius-2xl: 1rem;     /* 16px */
+  --ms-radius-full: 9999px;
+
+  /* ============================================
+     Z-INDEX SCALE
+     ============================================ */
+  --ms-z-base: 0;
+  --ms-z-dropdown: 1000;
+  --ms-z-sticky: 1020;
+  --ms-z-fixed: 1030;
+  --ms-z-modal-backdrop: 1040;
+  --ms-z-modal: 1050;
+  --ms-z-popover: 1060;
+  --ms-z-tooltip: 1070;
+  --ms-z-toast: 1080;
+
+  /* ============================================
+     TRANSITIONS
+     ============================================ */
+  --ms-transition-fast: 150ms ease-in-out;
+  --ms-transition-base: 250ms ease-in-out;
+  --ms-transition-slow: 350ms ease-in-out;
+
+  /* ============================================
+     GRADIENTS
+     ============================================ */
+  --ms-gradient-primary: linear-gradient(135deg, #0474b8 0%, #0556AD 100%);
+  --ms-gradient-surface: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+  --ms-gradient-header: linear-gradient(180deg, #ffffff 0%, #f0f8ff 100%);
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   ============================================ */
+.dark {
+  /* Background Colors - Dark Mode */
+  --ms-color-bg: #0f172a;
+  --ms-color-bg-elevated: #1e293b;
+  --ms-color-bg-surface: #1e293b;
+  --ms-color-bg-hover: #334155;
+  
+  /* Text Colors - Dark Mode */
+  --ms-color-text: #f1f5f9;
+  --ms-color-text-secondary: #cbd5e1;
+  --ms-color-text-tertiary: #94a3b8;
+  --ms-color-text-muted: #64748b;
+  
+  /* Border Colors - Dark Mode */
+  --ms-color-border: #334155;
+  --ms-color-border-light: #1e293b;
+  --ms-color-border-dark: #475569;
+
+  /* Adjusted Primary for Dark Mode */
+  --ms-color-primary-400: #4fc3f7;
+  --ms-color-primary-500: #29b6f6;
+
+  /* Gradients - Dark Mode */
+  --ms-gradient-surface: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  --ms-gradient-header: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Medical Status Colors */
+.ms-text-success { color: var(--ms-color-success); }
+.ms-text-warning { color: var(--ms-color-warning); }
+.ms-text-error { color: var(--ms-color-error); }
+.ms-text-info { color: var(--ms-color-info); }
+.ms-text-primary { color: var(--ms-color-primary-500); }
+
+.ms-bg-success { background-color: var(--ms-color-success-light); }
+.ms-bg-warning { background-color: var(--ms-color-warning-light); }
+.ms-bg-error { background-color: var(--ms-color-error-light); }
+.ms-bg-info { background-color: var(--ms-color-info-light); }
+.ms-bg-primary { background-color: var(--ms-color-primary-50); }
+
+/* Focus States for Accessibility */
+.ms-focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(4, 116, 184, 0.4);
+}
+
+.ms-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(4, 116, 184, 0.4);
+}
+
+/* Medical Card Styles */
+.ms-card {
+  background: var(--ms-color-bg-elevated);
+  border: 1px solid var(--ms-color-border);
+  border-radius: var(--ms-radius-lg);
+  box-shadow: var(--ms-shadow-sm);
+}
+
+.ms-card-hover:hover {
+  box-shadow: var(--ms-shadow-md);
+  transform: translateY(-1px);
+  transition: all var(--ms-transition-base);
+}
+
+/* Medical Button Styles */
+.ms-btn-primary {
+  background: var(--ms-color-primary-500);
+  color: white;
+  border: none;
+  border-radius: var(--ms-radius-md);
+  padding: var(--ms-space-2) var(--ms-space-4);
+  font-weight: var(--ms-font-weight-semibold);
+  transition: all var(--ms-transition-fast);
+}
+
+.ms-btn-primary:hover {
+  background: var(--ms-color-primary-600);
+  box-shadow: var(--ms-shadow-primary);
+}
+
+.ms-btn-secondary {
+  background: transparent;
+  color: var(--ms-color-primary-500);
+  border: 1px solid var(--ms-color-primary-500);
+  border-radius: var(--ms-radius-md);
+  padding: var(--ms-space-2) var(--ms-space-4);
+  font-weight: var(--ms-font-weight-semibold);
+  transition: all var(--ms-transition-fast);
+}
+
+.ms-btn-secondary:hover {
+  background: var(--ms-color-primary-50);
+}
+
+/* Scrollbar Styling */
+.ms-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ms-scrollbar::-webkit-scrollbar-track {
+  background: var(--ms-color-bg-surface);
+}
+
+.ms-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--ms-color-border-dark);
+  border-radius: var(--ms-radius-full);
+}
+
+.ms-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--ms-color-text-tertiary);
+}
+
+/* Animation Utilities */
+@keyframes ms-pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.ms-animate-pulse-soft {
+  animation: ms-pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes ms-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ms-animate-fade-in {
+  animation: ms-fade-in var(--ms-transition-base) ease-out;
+}

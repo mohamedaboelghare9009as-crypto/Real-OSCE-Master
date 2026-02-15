@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+  }
+}
+
+/* Clayomorphic Design System (Standard CSS for reliability) */
+.clay-card {
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border-radius: 32px !important;
+  padding: 1.5rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.5),
+    -4px -4px 8px rgba(255, 255, 255, 0.02),
+    inset 4px 4px 8px rgba(0, 0, 0, 0.4),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05) !important;
+}
+
+.clay-card:hover {
+  transform: scale(1.02) !important;
+  box-shadow:
+    12px 12px 24px rgba(0, 0, 0, 0.6),
+    -6px -6px 12px rgba(255, 255, 255, 0.03),
+    inset 6px 6px 12px rgba(0, 0, 0, 0.5),
+    inset -6px -6px 12px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Clinical Utility Helpers */
+.glass-panel {
+  @apply bg-slate-950/40 backdrop-blur-xl border-slate-800/50;
+}

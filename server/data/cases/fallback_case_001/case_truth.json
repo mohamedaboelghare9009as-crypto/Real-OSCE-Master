@@ -1,0 +1,71 @@
+{
+  "case_metadata": {
+    "id": "fallback_case_001",
+    "title": "Acute Chest Pain (Fallback)",
+    "difficulty": "Intermediate",
+    "specialty": "Internal Medicine",
+    "tags": [
+      "Cardiology",
+      "Emergency"
+    ],
+    "estimated_time": 15
+  },
+  "patient_identity": {
+    "name": "James Miller",
+    "age": 58,
+    "gender": "Male",
+    "occupation": "Accountant"
+  },
+  "presenting_complaint": {
+    "chief_complaint": "Chest pain",
+    "duration": "2 hours"
+  },
+  "history_of_presenting_illness": {
+    "narrative": "Started while gardening. Heavy pressure on chest, 7/10 severity. Radiation to left jaw.",
+    "symptoms": [
+      "Diaphoresis",
+      "Nausea",
+      "Shortness of breath"
+    ],
+    "aggravating_factors": [
+      "Exertion"
+    ],
+    "relieving_factors": [
+      "Rest (partial)"
+    ]
+  },
+  "vital_signs": {
+    "bp": "150/95",
+    "hr": 98,
+    "temp": 37.2,
+    "rr": 22,
+    "o2": 96
+  },
+  "physical_examination": {
+    "general": "Anxious, clutching chest, diaphoretic",
+    "cvs": "Tachycardic, regular rhythm, S4 audible",
+    "resp": "Clear",
+    "abd": "Soft, non-tender",
+    "neuro": "Intact"
+  },
+  "diagnostic_conclusion": {
+    "differential_diagnosis": [
+      "Acute MI",
+      "Unstable Angina",
+      "Aortic Dissection"
+    ],
+    "final_diagnosis": "Acute Inferior STEMI",
+    "critical_findings": [
+      "ST elevation II, III, aVF",
+      "Troponin positive"
+    ]
+  },
+  "patient_behavior_rules": {
+    "personality": "Anxious but cooperative",
+    "pain_level": 7,
+    "responses": {
+      "fallback": "I just need this pain to stop, doctor.",
+      "pain": "It feels like an elephant is sitting on my chest."
+    }
+  }
+}

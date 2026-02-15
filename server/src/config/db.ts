@@ -1,0 +1,17 @@
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+export const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URI || '', {
+            family: 4 // Force IPv4 to fix ECONNREFUSED issues
+        });
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error: any) {
+        console.error(`Error: ${error.message}`);
+        console.warn('MongoDB Connection Failed. Starting in Offline Mode.');
+        // process.exit(1);
+    }
+};
